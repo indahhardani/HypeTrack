@@ -21,30 +21,30 @@
       font-family: 'Sora', sans-serif;
     }
     .custom-scrollbar::-webkit-scrollbar { width: 6px; }
-    .custom-scrollbar::-webkit-scrollbar-track { background: rgba(15, 23, 42, 0.6); }
-    .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.2); border-radius: 4px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: rgba(15, 23, 42, 0.2); }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.3); border-radius: 4px; }
   </style>
 </head>
-<body class="bg-gradient-to-br from-[#0c1f38] via-[#0b3c5d] via-[#105e62] to-[#128a84] text-slate-100 min-h-screen flex flex-col antialiased selection:bg-teal-500 selection:text-white">
+<body class="bg-gradient-to-r from-[#0060e6] via-[#1f93cb] via-[#3fa9b8] via-[#51c0ad] to-[#6be0b2] text-slate-100 min-h-screen flex flex-col antialiased selection:bg-teal-700 selection:text-white">
 
   <!-- Header / Navigation -->
-  <header class="bg-slate-950/40 backdrop-blur-md border-b border-white/10 px-6 py-4 flex items-center justify-between sticky top-0 z-30">
+  <header class="bg-slate-950/20 backdrop-blur-md border-b border-white/15 px-6 py-4 flex items-center justify-between sticky top-0 z-30">
     <div class="flex items-center gap-3">
-      <!-- Logo diubah dari HR menjadi HT -->
-      <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-cyan-500 via-teal-400 to-emerald-400 flex items-center justify-center font-black text-slate-950 shadow-lg shadow-teal-500/20 text-sm tracking-wider">
+      <!-- Logo HT -->
+      <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-teal-400 to-emerald-300 flex items-center justify-center font-black text-slate-900 shadow-md text-sm tracking-wider">
         HT
       </div>
       <div>
         <h1 class="text-sm font-bold text-white tracking-wide">HypeTrack</h1>
-        <p class="text-[10px] text-teal-100/70">Hypefast Ecosystem — Attendance & Expense Engine</p>
+        <p class="text-[10px] text-white/80">Hypefast Ecosystem — Attendance & Expense Engine</p>
       </div>
     </div>
 
     <div class="flex items-center gap-3">
-      <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-semibold bg-teal-400/10 text-teal-300 border border-teal-400/20">
-        <span class="w-1.5 h-1.5 rounded-full bg-teal-400 animate-pulse"></span> HR System Active
+      <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-semibold bg-white/15 text-white border border-white/20 backdrop-blur-sm">
+        <span class="w-1.5 h-1.5 rounded-full bg-emerald-300 animate-pulse"></span> HR System Active
       </span>
-      <a href="https://indahhardani.github.io" class="bg-white/10 hover:bg-white/20 text-white px-3 py-1.5 rounded-lg text-xs font-semibold transition border border-white/10 flex items-center gap-2">
+      <a href="https://indahhardani.github.io" class="bg-slate-950/30 hover:bg-slate-950/50 text-white px-3 py-1.5 rounded-lg text-xs font-semibold transition border border-white/15 flex items-center gap-2 backdrop-blur-sm">
         <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> Portal Utama
       </a>
     </div>
@@ -54,20 +54,20 @@
   <main class="flex-1 p-6 space-y-6 max-w-[1600px] w-full mx-auto">
 
     <!-- Profile & Period Info Banner -->
-    <div class="bg-slate-950/30 backdrop-blur-md border border-white/10 rounded-2xl p-4 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+    <div class="bg-slate-950/20 backdrop-blur-md border border-white/15 rounded-2xl p-4 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
       <div class="flex items-center gap-4">
-        <div class="w-12 h-12 rounded-full bg-gradient-to-tr from-teal-400 to-cyan-500 flex items-center justify-center font-bold text-slate-950 text-base shadow-md">
+        <div class="w-12 h-12 rounded-full bg-gradient-to-tr from-teal-300 to-emerald-200 flex items-center justify-center font-bold text-slate-900 text-base shadow-md">
           IH
         </div>
         <div>
           <h2 class="text-base font-bold text-white">Indah Khairunnisa Hardani</h2>
-          <p class="text-xs text-teal-100/70">PT HYPEFAST KARYA NUSANTARA &bull; <span class="text-teal-300 font-medium">Periode: September 2026</span></p>
+          <p class="text-xs text-white/80">PT HYPEFAST KARYA NUSANTARA &bull; <span class="text-emerald-200 font-semibold">Periode: September 2026</span></p>
         </div>
       </div>
       
       <div class="flex gap-2">
-        <button onclick="openReimburseModal()" class="bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-400 hover:to-cyan-400 text-slate-950 font-bold px-4 py-2 rounded-xl text-xs transition flex items-center gap-2 shadow-lg shadow-teal-500/20">
-          <i data-lucide="receipt" class="w-4 h-4"></i> Ajukan Reimbursement (AI Scan)
+        <button onclick="openReimburseModal()" class="bg-slate-950/40 hover:bg-slate-950/60 text-white font-bold px-4 py-2 rounded-xl text-xs transition flex items-center gap-2 border border-white/20 shadow-md backdrop-blur-md">
+          <i data-lucide="receipt" class="w-4 h-4 text-emerald-300"></i> Ajukan Reimbursement (AI Scan)
         </button>
       </div>
     </div>
@@ -76,53 +76,53 @@
     <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
       
       <!-- Card WFO Progress Meter -->
-      <div class="md:col-span-2 bg-slate-950/30 backdrop-blur-md border border-white/10 rounded-2xl p-5 flex flex-col justify-between shadow-sm relative overflow-hidden">
+      <div class="md:col-span-2 bg-slate-950/20 backdrop-blur-md border border-white/15 rounded-2xl p-5 flex flex-col justify-between shadow-sm relative overflow-hidden">
         <div class="flex items-center justify-between">
           <div>
-            <p class="text-[11px] text-teal-100/70 font-medium uppercase tracking-wider">Durasi WFO Bulan Ini (Bersih)</p>
+            <p class="text-[11px] text-white/80 font-medium uppercase tracking-wider">Durasi WFO Bulan Ini (Bersih)</p>
             <div class="flex items-baseline gap-2 mt-1">
               <h3 class="text-3xl font-extrabold text-white" id="wfo-total-hours">63.3</h3>
-              <span class="text-xs text-teal-100/70">/ 60 Jam Minimal</span>
+              <span class="text-xs text-white/80">/ 60 Jam Minimal</span>
             </div>
           </div>
-          <span class="px-3 py-1 rounded-full text-xs font-bold bg-teal-400/10 text-teal-300 border border-teal-400/20 flex items-center gap-1">
-            <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> Target Terpenuhi (105.5%)
+          <span class="px-3 py-1 rounded-full text-xs font-bold bg-emerald-400/20 text-emerald-100 border border-emerald-300/30 flex items-center gap-1 backdrop-blur-sm">
+            <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-emerald-300"></i> Target Terpenuhi (105.5%)
           </span>
         </div>
 
         <!-- Progress Bar -->
         <div class="mt-4 space-y-1.5">
-          <div class="w-full bg-black/30 h-3 rounded-full overflow-hidden p-0.5 border border-white/10">
-            <div class="bg-gradient-to-r from-cyan-400 via-teal-400 to-emerald-400 h-full rounded-full transition-all duration-1000" style="width: 100%"></div>
+          <div class="w-full bg-slate-950/30 h-3 rounded-full overflow-hidden p-0.5 border border-white/15">
+            <div class="bg-gradient-to-r from-teal-300 via-emerald-300 to-green-300 h-full rounded-full transition-all duration-1000" style="width: 100%"></div>
           </div>
-          <div class="flex justify-between text-[10px] text-teal-100/70 font-medium">
+          <div class="flex justify-between text-[10px] text-white/80 font-medium">
             <span>0 Jam</span>
             <span>Target: 60 Jam</span>
-            <span class="text-teal-300 font-bold">63.3 Jam Selesai</span>
+            <span class="text-emerald-200 font-bold">63.3 Jam Selesai</span>
           </div>
         </div>
       </div>
 
       <!-- Card Total Hari Hadir -->
-      <div class="bg-slate-950/30 backdrop-blur-md border border-white/10 rounded-2xl p-5 flex items-center justify-between shadow-sm">
+      <div class="bg-slate-950/20 backdrop-blur-md border border-white/15 rounded-2xl p-5 flex items-center justify-between shadow-sm">
         <div>
-          <p class="text-[11px] text-teal-100/70 font-medium">Total Hari Hadir WFO</p>
+          <p class="text-[11px] text-white/80 font-medium">Total Hari Hadir WFO</p>
           <h3 class="text-2xl font-bold text-white mt-1">8 Hari</h3>
-          <p class="text-[10px] text-teal-100/60 mt-0.5">Rata-rata 7.9 Jam / Hari</p>
+          <p class="text-[10px] text-white/70 mt-0.5">Rata-rata 7.9 Jam / Hari</p>
         </div>
-        <div class="p-3 bg-teal-400/10 text-teal-300 border border-teal-400/20 rounded-xl">
+        <div class="p-3 bg-white/10 text-emerald-200 border border-white/15 rounded-xl">
           <i data-lucide="calendar-check" class="w-6 h-6"></i>
         </div>
       </div>
 
       <!-- Card Total Reimbursement Status -->
-      <div class="bg-slate-950/30 backdrop-blur-md border border-white/10 rounded-2xl p-5 flex items-center justify-between shadow-sm">
+      <div class="bg-slate-950/20 backdrop-blur-md border border-white/15 rounded-2xl p-5 flex items-center justify-between shadow-sm">
         <div>
-          <p class="text-[11px] text-teal-100/70 font-medium">Total Reimbursement</p>
-          <h3 class="text-2xl font-bold text-teal-300 mt-1" id="kpi-reimburse-total">Rp 450.000</h3>
-          <p class="text-[10px] text-amber-300/90 mt-0.5">1 Pengajuan Pending Review</p>
+          <p class="text-[11px] text-white/80 font-medium">Total Reimbursement</p>
+          <h3 class="text-2xl font-bold text-emerald-200 mt-1" id="kpi-reimburse-total">Rp 450.000</h3>
+          <p class="text-[10px] text-amber-200 mt-0.5">1 Pengajuan Pending Review</p>
         </div>
-        <div class="p-3 bg-cyan-400/10 text-cyan-300 border border-cyan-400/20 rounded-xl">
+        <div class="p-3 bg-white/10 text-teal-200 border border-white/15 rounded-xl">
           <i data-lucide="wallet" class="w-6 h-6"></i>
         </div>
       </div>
@@ -133,18 +133,18 @@
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
       
       <!-- Left Column: Tabel Presensi WFO Detail (8 Cols) -->
-      <div class="lg:col-span-8 bg-slate-950/30 backdrop-blur-md border border-white/10 rounded-2xl overflow-hidden flex flex-col">
-        <div class="p-4 border-b border-white/10 flex items-center justify-between">
+      <div class="lg:col-span-8 bg-slate-950/20 backdrop-blur-md border border-white/15 rounded-2xl overflow-hidden flex flex-col">
+        <div class="p-4 border-b border-white/15 flex items-center justify-between">
           <h3 class="text-xs font-bold text-white flex items-center gap-2">
-            <i data-lucide="clock" class="w-4 h-4 text-teal-300"></i> Rincian Presensi WFO September 2026 (Potong Istirahat 1 Jam)
+            <i data-lucide="clock" class="w-4 h-4 text-emerald-300"></i> Rincian Presensi WFO September 2026 (Potong Istirahat 1 Jam)
           </h3>
-          <span class="text-[10px] text-teal-100/70 bg-black/20 border border-white/10 px-2.5 py-1 rounded-lg">8 Sesi Tercatat</span>
+          <span class="text-[10px] text-white/80 bg-slate-950/30 border border-white/15 px-2.5 py-1 rounded-lg">8 Sesi Tercatat</span>
         </div>
 
         <div class="overflow-x-auto">
           <table class="w-full text-left border-collapse text-xs">
             <thead>
-              <tr class="bg-black/20 border-b border-white/10 text-teal-100/70 font-semibold">
+              <tr class="bg-slate-950/30 border-b border-white/15 text-white/80 font-semibold">
                 <th class="p-3">Tanggal</th>
                 <th class="p-3">Shift</th>
                 <th class="p-3">Jadwal Masuk/Keluar</th>
@@ -154,7 +154,7 @@
                 <th class="p-3 text-center">Status</th>
               </tr>
             </thead>
-            <tbody id="attendance-table-body" class="divide-y divide-white/5 text-slate-200">
+            <tbody id="attendance-table-body" class="divide-y divide-white/10 text-slate-100">
               <!-- Rendered via JS -->
             </tbody>
           </table>
@@ -162,27 +162,27 @@
       </div>
 
       <!-- Right Column: Panel Reimbursement History (4 Cols) -->
-      <div class="lg:col-span-4 bg-slate-950/30 backdrop-blur-md border border-white/10 rounded-2xl p-5 flex flex-col space-y-4">
-        <div class="flex items-center justify-between border-b border-white/10 pb-3">
+      <div class="lg:col-span-4 bg-slate-950/20 backdrop-blur-md border border-white/15 rounded-2xl p-5 flex flex-col space-y-4">
+        <div class="flex items-center justify-between border-b border-white/15 pb-3">
           <h3 class="text-xs font-bold text-white flex items-center gap-2">
-            <i data-lucide="file-text" class="w-4 h-4 text-teal-300"></i> Riwayat Reimbursement
+            <i data-lucide="file-text" class="w-4 h-4 text-emerald-300"></i> Riwayat Reimbursement
           </h3>
-          <button onclick="openReimburseModal()" class="text-[10px] text-teal-300 font-semibold hover:underline">+ Tambah</button>
+          <button onclick="openReimburseModal()" class="text-[10px] text-emerald-200 font-semibold hover:underline">+ Tambah</button>
         </div>
 
         <!-- List Reimbursement items -->
         <div class="flex-1 space-y-3 overflow-y-auto custom-scrollbar pr-1 max-h-[400px]" id="reimburse-list">
-          <div class="bg-black/20 border border-white/10 p-3.5 rounded-xl space-y-2">
+          <div class="bg-slate-950/30 border border-white/15 p-3.5 rounded-xl space-y-2">
             <div class="flex justify-between items-start">
               <div>
                 <p class="font-bold text-white text-xs">Taksi Bluebird (Klien Meeting)</p>
-                <p class="text-[10px] text-teal-100/60">18 Sep 2026 &bull; Transportasi</p>
+                <p class="text-[10px] text-white/70">18 Sep 2026 &bull; Transportasi</p>
               </div>
-              <span class="px-2 py-0.5 rounded text-[9px] font-bold bg-amber-400/10 text-amber-300 border border-amber-400/20">Pending</span>
+              <span class="px-2 py-0.5 rounded text-[9px] font-bold bg-amber-400/20 text-amber-200 border border-amber-300/30">Pending</span>
             </div>
             <div class="flex justify-between items-center pt-2 border-t border-white/10 text-xs">
-              <span class="text-teal-100/60 text-[10px]">Total Klaim:</span>
-              <span class="font-bold text-teal-300">Rp 450.000</span>
+              <span class="text-white/70 text-[10px]">Total Klaim:</span>
+              <span class="font-bold text-emerald-200">Rp 450.000</span>
             </div>
           </div>
         </div>
@@ -195,11 +195,11 @@
 
   <!-- MODAL: AUTO SCAN REIMBURSEMENT FORM -->
   <div id="reimburse-modal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
-    <div class="bg-slate-900 border border-teal-500/30 w-full max-w-lg rounded-2xl flex flex-col shadow-2xl overflow-hidden">
+    <div class="bg-slate-900 border border-emerald-500/30 w-full max-w-lg rounded-2xl flex flex-col shadow-2xl overflow-hidden">
       
       <div class="px-6 py-4 border-b border-white/10 flex items-center justify-between bg-slate-800/50">
         <h3 class="text-sm font-bold text-white flex items-center gap-2">
-          <i data-lucide="scan-line" class="w-4 h-4 text-teal-400"></i> AI Reimbursement Auto-Scan
+          <i data-lucide="scan-line" class="w-4 h-4 text-emerald-400"></i> AI Reimbursement Auto-Scan
         </h3>
         <button type="button" onclick="closeReimburseModal()" class="text-slate-400 hover:text-white transition">
           <i data-lucide="x" class="w-5 h-5"></i>
@@ -209,14 +209,14 @@
       <form onsubmit="handleSubmitReimbursement(event)" class="p-6 space-y-4 text-xs">
         
         <!-- File Upload Area -->
-        <div class="border-2 border-dashed border-teal-500/30 hover:border-teal-400 rounded-xl p-5 text-center cursor-pointer transition bg-slate-950/50" onclick="document.getElementById('receipt-file').click()">
-          <i data-lucide="upload-cloud" class="w-8 h-8 text-teal-400 mx-auto mb-2"></i>
+        <div class="border-2 border-dashed border-emerald-500/30 hover:border-emerald-400 rounded-xl p-5 text-center cursor-pointer transition bg-slate-950/50" onclick="document.getElementById('receipt-file').click()">
+          <i data-lucide="upload-cloud" class="w-8 h-8 text-emerald-400 mx-auto mb-2"></i>
           <p class="font-semibold text-slate-200">Unggah Bukti Struk / Kuitansi</p>
           <p class="text-[10px] text-slate-400 mt-1">Format JPG, PNG, atau PDF (AI Otomatis Ekstraksi Data)</p>
           <input type="file" id="receipt-file" class="hidden" accept="image/*,.pdf" onchange="simulateAiScan(event)">
         </div>
 
-        <div id="scan-status" class="hidden text-center py-2 text-teal-400 font-semibold text-[11px] flex items-center justify-center gap-2">
+        <div id="scan-status" class="hidden text-center py-2 text-emerald-400 font-semibold text-[11px] flex items-center justify-center gap-2">
           <i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> AI Sedang Membaca Struk...
         </div>
 
@@ -224,18 +224,18 @@
         <div class="space-y-3 pt-2">
           <div>
             <label class="block font-semibold text-slate-300 mb-1">Merchant / Judul Pengeluaran</label>
-            <input type="text" id="reimburse-title" required placeholder="Contoh: Grab / Bluebird / Solaria" class="w-full bg-slate-950 border border-white/10 rounded-xl px-3.5 py-2.5 text-slate-100 focus:outline-none focus:border-teal-400">
+            <input type="text" id="reimburse-title" required placeholder="Contoh: Grab / Bluebird / Solaria" class="w-full bg-slate-950 border border-white/10 rounded-xl px-3.5 py-2.5 text-slate-100 focus:outline-none focus:border-emerald-400">
           </div>
 
           <div class="grid grid-cols-2 gap-3">
             <div>
               <label class="block font-semibold text-slate-300 mb-1">Tanggal Transaksi</label>
-              <input type="date" id="reimburse-date" required class="w-full bg-slate-950 border border-white/10 rounded-xl px-3 py-2.5 text-slate-100 focus:outline-none focus:border-teal-400">
+              <input type="date" id="reimburse-date" required class="w-full bg-slate-950 border border-white/10 rounded-xl px-3 py-2.5 text-slate-100 focus:outline-none focus:border-emerald-400">
             </div>
 
             <div>
               <label class="block font-semibold text-slate-300 mb-1">Kategori</label>
-              <select id="reimburse-category" required class="w-full bg-slate-950 border border-white/10 rounded-xl px-3 py-2.5 text-slate-100 focus:outline-none focus:border-teal-400">
+              <select id="reimburse-category" required class="w-full bg-slate-950 border border-white/10 rounded-xl px-3 py-2.5 text-slate-100 focus:outline-none focus:border-emerald-400">
                 <option value="Transportasi">Transportasi</option>
                 <option value="Makan Klien">Makan Klien</option>
                 <option value="Alat Kantor">Alat Kantor</option>
@@ -246,13 +246,13 @@
 
           <div>
             <label class="block font-semibold text-slate-300 mb-1">Nominal Klaim (Rp)</label>
-            <input type="number" id="reimburse-amount" required placeholder="Contoh: 150000" class="w-full bg-slate-950 border border-white/10 rounded-xl px-3.5 py-2.5 text-slate-100 focus:outline-none focus:border-teal-400">
+            <input type="number" id="reimburse-amount" required placeholder="Contoh: 150000" class="w-full bg-slate-950 border border-white/10 rounded-xl px-3.5 py-2.5 text-slate-100 focus:outline-none focus:border-emerald-400">
           </div>
         </div>
 
         <div class="pt-3 border-t border-white/10 flex justify-end gap-2">
           <button type="button" onclick="closeReimburseModal()" class="bg-slate-800 text-slate-300 px-4 py-2 rounded-xl font-bold hover:bg-slate-700 transition">Batal</button>
-          <button type="submit" id="btn-submit-reimburse" class="bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-400 hover:to-cyan-400 text-slate-950 px-5 py-2 rounded-xl font-bold transition shadow-lg shadow-teal-500/20">
+          <button type="submit" id="btn-submit-reimburse" class="bg-gradient-to-r from-teal-500 to-emerald-400 hover:from-teal-400 hover:to-emerald-300 text-slate-950 px-5 py-2 rounded-xl font-bold transition shadow-lg shadow-teal-500/20">
             Kirim Pengajuan Reimbursement
           </button>
         </div>
@@ -280,15 +280,15 @@
       if (!tbody) return;
 
       tbody.innerHTML = excelAttendanceData.map(item => `
-        <tr class="hover:bg-white/5 transition">
+        <tr class="hover:bg-white/10 transition">
           <td class="p-3 font-semibold text-white">${item.date}</td>
-          <td class="p-3 text-teal-100/60">${item.shift}</td>
-          <td class="p-3 text-teal-100/60">${item.schedule}</td>
-          <td class="p-3 font-semibold text-teal-300">${item.cin}</td>
-          <td class="p-3 font-semibold text-cyan-300">${item.cout}</td>
-          <td class="p-3 text-right font-bold text-emerald-300">${item.duration}</td>
+          <td class="p-3 text-white/70">${item.shift}</td>
+          <td class="p-3 text-white/70">${item.schedule}</td>
+          <td class="p-3 font-semibold text-emerald-300">${item.cin}</td>
+          <td class="p-3 font-semibold text-teal-200">${item.cout}</td>
+          <td class="p-3 text-right font-bold text-emerald-200">${item.duration}</td>
           <td class="p-3 text-center">
-            <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-teal-400/10 text-teal-300 border border-teal-400/20">
+            <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-400/20 text-emerald-200 border border-emerald-300/30">
               ${item.status}
             </span>
           </td>
@@ -328,18 +328,18 @@
 
       const list = document.getElementById('reimburse-list');
       const newItem = document.createElement('div');
-      newItem.className = "bg-black/20 border border-white/10 p-3.5 rounded-xl space-y-2";
+      newItem.className = "bg-slate-950/30 border border-white/15 p-3.5 rounded-xl space-y-2";
       newItem.innerHTML = `
         <div class="flex justify-between items-start">
           <div>
             <p class="font-bold text-white text-xs">${title}</p>
-            <p class="text-[10px] text-teal-100/60">${date} &bull; ${category}</p>
+            <p class="text-[10px] text-white/70">${date} &bull; ${category}</p>
           </div>
-          <span class="px-2 py-0.5 rounded text-[9px] font-bold bg-amber-400/10 text-amber-300 border border-amber-400/20">Pending</span>
+          <span class="px-2 py-0.5 rounded text-[9px] font-bold bg-amber-400/20 text-amber-200 border border-amber-300/30">Pending</span>
         </div>
         <div class="flex justify-between items-center pt-2 border-t border-white/10 text-xs">
-          <span class="text-teal-100/60 text-[10px]">Total Klaim:</span>
-          <span class="font-bold text-teal-300">Rp ${amount.toLocaleString('id-ID')}</span>
+          <span class="text-white/70 text-[10px]">Total Klaim:</span>
+          <span class="font-bold text-emerald-200">Rp ${amount.toLocaleString('id-ID')}</span>
         </div>
       `;
       list.prepend(newItem);
