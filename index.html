@@ -70,14 +70,14 @@
       <div class="md:col-span-2 bg-slate-800/50 border border-slate-700/50 rounded-2xl p-5 flex flex-col justify-between shadow-sm relative overflow-hidden">
         <div class="flex items-center justify-between">
           <div>
-            <p class="text-[11px] text-slate-400 font-medium uppercase tracking-wider">Durasi WFO Bulan Ini</p>
+            <p class="text-[11px] text-slate-400 font-medium uppercase tracking-wider">Durasi WFO Bulan Ini (Bersih)</p>
             <div class="flex items-baseline gap-2 mt-1">
-              <h3 class="text-3xl font-extrabold text-white" id="wfo-total-hours">71.3</h3>
+              <h3 class="text-3xl font-extrabold text-white" id="wfo-total-hours">63.3</h3>
               <span class="text-xs text-slate-400">/ 60 Jam Minimal</span>
             </div>
           </div>
           <span class="px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex items-center gap-1">
-            <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> Target Terpenuhi (118.8%)
+            <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> Target Terpenuhi (105.5%)
           </span>
         </div>
 
@@ -89,7 +89,7 @@
           <div class="flex justify-between text-[10px] text-slate-400 font-medium">
             <span>0 Jam</span>
             <span>Target: 60 Jam</span>
-            <span class="text-emerald-400 font-bold">71.3 Jam Selesai</span>
+            <span class="text-emerald-400 font-bold">63.3 Jam Selesai</span>
           </div>
         </div>
       </div>
@@ -99,7 +99,7 @@
         <div>
           <p class="text-[11px] text-slate-400 font-medium">Total Hari Hadir WFO</p>
           <h3 class="text-2xl font-bold text-white mt-1">8 Hari</h3>
-          <p class="text-[10px] text-slate-400 mt-0.5">Rata-rata 8.9 Jam / Hari</p>
+          <p class="text-[10px] text-slate-400 mt-0.5">Rata-rata 7.9 Jam / Hari</p>
         </div>
         <div class="p-3 bg-blue-500/10 text-blue-400 rounded-xl">
           <i data-lucide="calendar-check" class="w-6 h-6"></i>
@@ -127,7 +127,7 @@
       <div class="lg:col-span-8 bg-slate-800/40 border border-slate-700/60 rounded-2xl overflow-hidden flex flex-col">
         <div class="p-4 border-b border-slate-700/60 flex items-center justify-between">
           <h3 class="text-xs font-bold text-white flex items-center gap-2">
-            <i data-lucide="clock" class="w-4 h-4 text-indigo-400"></i> Rincian Presensi WFO September 2026
+            <i data-lucide="clock" class="w-4 h-4 text-indigo-400"></i> Rincian Presensi WFO September 2026 (Potong Istirahat 1 Jam)
           </h3>
           <span class="text-[10px] text-slate-400 bg-slate-900 border border-slate-700 px-2.5 py-1 rounded-lg">8 Sesi Tercatat</span>
         </div>
@@ -256,16 +256,16 @@
   <script>
     lucide.createIcons();
 
-    // Data Presensi dari Excel Data_Kehadiran_Sep_2026.xlsx
+    // Data Presensi dari Excel Data_Kehadiran_Sep_2026.xlsx (Sudah dikurangi 1 Jam Istirahat)
     const excelAttendanceData = [
-      { date: 'Wed, 2 Sep 2026', shift: 'N', schedule: '09:30 - 18:30', cin: '08:13', cout: '18:30', duration: '10 Jam 17 Mnt', rawHours: 10.28, status: 'Hadir (H)' },
-      { date: 'Fri, 4 Sep 2026', shift: 'N', schedule: '09:30 - 18:30', cin: '08:20', cout: '15:45', duration: '7 Jam 25 Mnt', rawHours: 7.42, status: 'Hadir (H)' },
-      { date: 'Wed, 9 Sep 2026', shift: 'N', schedule: '09:30 - 18:30', cin: '08:38', cout: '17:12', duration: '8 Jam 34 Mnt', rawHours: 8.57, status: 'Hadir (H)' },
-      { date: 'Thu, 10 Sep 2026', shift: 'N', schedule: '09:30 - 18:30', cin: '08:35', cout: '17:15', duration: '8 Jam 40 Mnt', rawHours: 8.67, status: 'Hadir (H)' },
-      { date: 'Wed, 16 Sep 2026', shift: 'N', schedule: '09:30 - 18:30', cin: '08:29', cout: '16:59', duration: '8 Jam 30 Mnt', rawHours: 8.50, status: 'Hadir (H)' },
-      { date: 'Thu, 17 Sep 2026', shift: 'N', schedule: '09:30 - 18:30', cin: '08:25', cout: '19:13', duration: '10 Jam 48 Mnt', rawHours: 10.80, status: 'Hadir (H)' },
-      { date: 'Mon, 21 Sep 2026', shift: 'N', schedule: '09:30 - 18:30', cin: '08:45', cout: '17:24', duration: '8 Jam 39 Mnt', rawHours: 8.65, status: 'Hadir (H)' },
-      { date: 'Thu, 24 Sep 2026', shift: 'N', schedule: '09:30 - 18:30', cin: '08:22', cout: '16:45', duration: '8 Jam 23 Mnt', rawHours: 8.38, status: 'Hadir (H)' },
+      { date: 'Wed, 2 Sep 2026', shift: 'N', schedule: '09:30 - 18:30', cin: '08:13', cout: '18:30', duration: '9 Jam 17 Mnt', rawHours: 9.28, status: 'Hadir (H)' },
+      { date: 'Fri, 4 Sep 2026', shift: 'N', schedule: '09:30 - 18:30', cin: '08:20', cout: '15:45', duration: '6 Jam 25 Mnt', rawHours: 6.42, status: 'Hadir (H)' },
+      { date: 'Wed, 9 Sep 2026', shift: 'N', schedule: '09:30 - 18:30', cin: '08:38', cout: '17:12', duration: '7 Jam 34 Mnt', rawHours: 7.57, status: 'Hadir (H)' },
+      { date: 'Thu, 10 Sep 2026', shift: 'N', schedule: '09:30 - 18:30', cin: '08:35', cout: '17:15', duration: '7 Jam 40 Mnt', rawHours: 7.67, status: 'Hadir (H)' },
+      { date: 'Wed, 16 Sep 2026', shift: 'N', schedule: '09:30 - 18:30', cin: '08:29', cout: '16:59', duration: '7 Jam 30 Mnt', rawHours: 7.50, status: 'Hadir (H)' },
+      { date: 'Thu, 17 Sep 2026', shift: 'N', schedule: '09:30 - 18:30', cin: '08:25', cout: '19:13', duration: '9 Jam 48 Mnt', rawHours: 9.80, status: 'Hadir (H)' },
+      { date: 'Mon, 21 Sep 2026', shift: 'N', schedule: '09:30 - 18:30', cin: '08:45', cout: '17:24', duration: '7 Jam 39 Mnt', rawHours: 7.65, status: 'Hadir (H)' },
+      { date: 'Thu, 24 Sep 2026', shift: 'N', schedule: '09:30 - 18:30', cin: '08:22', cout: '16:45', duration: '7 Jam 23 Mnt', rawHours: 7.38, status: 'Hadir (H)' },
     ];
 
     function renderAttendanceTable() {
