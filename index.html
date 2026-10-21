@@ -4,17 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>HypeTrack — HR Intelligence Platform</title>
-  
-  <!-- Tailwind CSS CDN -->
+
   <script src="https://cdn.tailwindcss.com"></script>
-  
-  <!-- Lucide Icons -->
-  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://unpkg.com/lucide@0.460.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4"></script>
 
-  <!-- Supabase JS Client CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-  <!-- Google Font: Sora -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -28,19 +22,23 @@
 </head>
 <body class="bg-gradient-to-r from-[#0060e6] via-[#1f93cb] via-[#3fa9b8] via-[#51c0ad] to-[#6be0b2] text-slate-100 min-h-screen flex flex-col antialiased selection:bg-teal-700 selection:text-white">
 
+  <!-- ==================== ERROR BANNER ==================== -->
+  <div id="error-banner" class="hidden fixed top-4 left-1/2 -translate-x-1/2 z-[60] max-w-xl w-[92%] bg-red-600/95 text-white text-xs font-semibold px-4 py-3 rounded-xl shadow-2xl border border-red-300/40">
+    <div class="flex items-start justify-between gap-3">
+      <span id="error-banner-text"></span>
+      <button onclick="document.getElementById('error-banner').classList.add('hidden')" class="font-bold">✕</button>
+    </div>
+  </div>
+
   <!-- ==================== 1. MODAL LOGIN DEMO ==================== -->
   <div id="login-modal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
     <div class="bg-white text-slate-900 w-full max-w-md rounded-3xl p-8 shadow-2xl space-y-6 border border-white/20 relative">
-      
-      <!-- Logo HT -->
+
       <div class="text-center space-y-2">
-        <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-teal-400 to-emerald-300 flex items-center justify-center font-black text-slate-900 text-2xl tracking-wider mx-auto shadow-md">
-          HT
-        </div>
+        <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-teal-400 to-emerald-300 flex items-center justify-center font-black text-slate-900 text-2xl tracking-wider mx-auto shadow-md">HT</div>
         <h2 class="text-2xl font-extrabold text-slate-900 tracking-tight">HypeTrack</h2>
       </div>
 
-      <!-- Form Login Manual -->
       <form onsubmit="handleManualLogin(event)" class="space-y-4 text-xs font-medium">
         <div>
           <label class="block font-bold text-blue-900 uppercase tracking-wider mb-1 text-[11px]">Username / Email</label>
@@ -50,38 +48,29 @@
           <label class="block font-bold text-blue-900 uppercase tracking-wider mb-1 text-[11px]">Password</label>
           <input type="password" id="login-password" value="123456" required class="w-full bg-slate-50 border border-teal-300 rounded-xl px-4 py-3 text-slate-800 placeholder-slate-400 focus:outline-none focus:border-teal-500 focus:ring-2 focus:ring-teal-200 transition">
         </div>
-        
         <button type="submit" class="w-full bg-gradient-to-r from-blue-600 via-teal-500 to-emerald-400 hover:opacity-90 text-white font-extrabold py-3.5 rounded-xl shadow-lg transition flex items-center justify-center gap-2 text-sm tracking-wide">
           <i data-lucide="log-in" class="w-4 h-4"></i> LOG IN
         </button>
       </form>
 
-      <!-- Quick Login Demo Buttons -->
       <div class="pt-2 border-t border-slate-100 text-center space-y-3">
         <p class="text-[11px] font-bold text-slate-500 tracking-wide uppercase flex items-center justify-center gap-1">
           <span class="text-amber-500">⚡</span> QUICK LOGIN (PILIH AKUN DEMO)
         </p>
-
         <div class="grid grid-cols-2 gap-2 text-xs font-bold">
-          <!-- Indah - Employee -->
           <button onclick="quickLoginDemo('USR-001')" class="bg-teal-50 hover:bg-teal-100 text-slate-800 p-2.5 rounded-xl border border-teal-200 flex items-center justify-between transition shadow-sm">
             <span class="flex items-center gap-1.5"><span class="text-sm">👩‍💻</span> Indah</span>
             <span class="bg-teal-200/60 text-teal-800 text-[9px] px-2 py-0.5 rounded-md uppercase font-extrabold">Staff</span>
           </button>
-
-          <!-- Budi - Head -->
           <button onclick="quickLoginDemo('USR-002')" class="bg-amber-50 hover:bg-amber-100 text-slate-800 p-2.5 rounded-xl border border-amber-200 flex items-center justify-between transition shadow-sm">
             <span class="flex items-center gap-1.5"><span class="text-sm">👨‍💼</span> Pak Budi</span>
             <span class="bg-amber-200/60 text-amber-800 text-[9px] px-2 py-0.5 rounded-md uppercase font-extrabold">Head</span>
           </button>
-
-          <!-- Siti - HRGA -->
           <button onclick="quickLoginDemo('USR-003')" class="bg-emerald-50 hover:bg-emerald-100 text-slate-800 p-2.5 rounded-xl border border-emerald-200 flex items-center justify-between transition shadow-sm">
             <span class="flex items-center gap-1.5"><span class="text-sm">🛡️</span> Siti</span>
             <span class="bg-emerald-200/60 text-emerald-800 text-[9px] px-2 py-0.5 rounded-md uppercase font-extrabold">HRGA</span>
           </button>
-
-          <!-- Management / CEO -->
+          <!-- Catatan: belum ada user CEO di DB. Ganti 'USR-004' kalau sudah dibuat di tabel profiles. -->
           <button onclick="quickLoginDemo('USR-002')" class="bg-purple-50 hover:bg-purple-100 text-slate-800 p-2.5 rounded-xl border border-purple-200 flex items-center justify-between transition shadow-sm">
             <span class="flex items-center gap-1.5"><span class="text-sm">💼</span> Management</span>
             <span class="bg-purple-200/60 text-purple-800 text-[9px] px-2 py-0.5 rounded-md uppercase font-extrabold">CEO</span>
@@ -90,19 +79,15 @@
       </div>
 
       <div class="text-center text-xs text-slate-500 font-medium pt-1">
-        Belum punya akun? <a href="#" onclick="alert('Silakan hubungi admin HRGA untuk pendaftaran akun!')" class="text-blue-600 font-bold hover:underline">Daftar Akun Baru</a>
+        Belum punya akun? <a href="#" onclick="alert('Silakan hubungi admin HRGA untuk pendaftaran akun!'); return false;" class="text-blue-600 font-bold hover:underline">Daftar Akun Baru</a>
       </div>
-
     </div>
   </div>
 
-
-  <!-- ==================== 2. HEADER NAVIGATION ==================== -->
+  <!-- ==================== 2. HEADER ==================== -->
   <header class="bg-slate-950/20 backdrop-blur-md border-b border-white/15 px-6 py-4 flex items-center justify-between sticky top-0 z-30">
     <div class="flex items-center gap-3">
-      <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-teal-400 to-emerald-300 flex items-center justify-center font-black text-slate-900 shadow-md text-sm tracking-wider">
-        HT
-      </div>
+      <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-teal-400 to-emerald-300 flex items-center justify-center font-black text-slate-900 shadow-md text-sm tracking-wider">HT</div>
       <div>
         <h1 class="text-sm font-bold text-white tracking-wide">HypeTrack <span class="text-[10px] bg-emerald-400/20 text-emerald-200 border border-emerald-300/30 px-2 py-0.5 rounded-full ml-1">Supabase DB</span></h1>
         <p class="text-[10px] text-white/80">Hypefast Ecosystem — Attendance & Approval Engine</p>
@@ -110,8 +95,9 @@
     </div>
 
     <div class="flex items-center gap-3">
-      <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-semibold bg-white/15 text-white border border-white/20 backdrop-blur-sm">
-        <span class="w-1.5 h-1.5 rounded-full bg-emerald-300 animate-pulse"></span> Connected
+      <span id="conn-badge" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-semibold bg-white/15 text-white border border-white/20 backdrop-blur-sm">
+        <span id="conn-dot" class="w-1.5 h-1.5 rounded-full bg-amber-300 animate-pulse"></span>
+        <span id="conn-text">Menghubungkan...</span>
       </span>
       <button onclick="handleLogout()" class="bg-red-500/20 hover:bg-red-500/40 text-red-100 px-3 py-1.5 rounded-lg text-xs font-semibold transition border border-red-400/30 flex items-center gap-1.5 backdrop-blur-sm">
         <i data-lucide="log-out" class="w-3.5 h-3.5"></i> Logout
@@ -119,58 +105,50 @@
     </div>
   </header>
 
-
-  <!-- ==================== 3. MAIN DASHBOARD CONTENT ==================== -->
+  <!-- ==================== 3. MAIN ==================== -->
   <main class="flex-1 p-6 space-y-6 max-w-[1600px] w-full mx-auto">
 
     <!-- Profile Banner -->
     <div class="bg-slate-950/20 backdrop-blur-md border border-white/15 rounded-2xl p-4 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
       <div class="flex items-center gap-4">
-        <div id="user-avatar" class="w-12 h-12 rounded-full bg-gradient-to-tr from-teal-300 to-emerald-200 flex items-center justify-center font-bold text-slate-900 text-base shadow-md">
-          IH
-        </div>
+        <div id="user-avatar" class="w-12 h-12 rounded-full bg-gradient-to-tr from-teal-300 to-emerald-200 flex items-center justify-center font-bold text-slate-900 text-base shadow-md">--</div>
         <div>
           <div class="flex items-center gap-2">
-            <h2 id="user-name" class="text-base font-bold text-white">Indah Khairunnisa Hardani</h2>
-            <span id="user-role-badge" class="px-2 py-0.5 rounded text-[10px] font-extrabold uppercase bg-teal-400/20 text-teal-200 border border-teal-300/30">
-              Employee
-            </span>
+            <h2 id="user-name" class="text-base font-bold text-white">Belum login</h2>
+            <span id="user-role-badge" class="px-2 py-0.5 rounded text-[10px] font-extrabold uppercase bg-teal-400/20 text-teal-200 border border-teal-300/30">-</span>
           </div>
-          <p class="text-xs text-white/80"><span id="user-company">PT HYPEFAST KARYA NUSANTARA</span> &bull; <span class="text-emerald-200 font-semibold">Periode: September 2026</span></p>
+          <p class="text-xs text-white/80"><span id="user-company">-</span> &bull; <span class="text-emerald-200 font-semibold">Periode: <span id="period-label">-</span></span></p>
         </div>
       </div>
-      
-      <div class="flex gap-2" id="action-header-buttons">
-        <button onclick="openReimburseModal()" class="bg-slate-950/40 hover:bg-slate-950/60 text-white font-bold px-4 py-2 rounded-xl text-xs transition flex items-center gap-2 border border-white/20 shadow-md backdrop-blur-md">
-          <i data-lucide="receipt" class="w-4 h-4 text-emerald-300"></i> Ajukan Reimbursement (AI Scan)
-        </button>
+
+      <div class="flex items-center gap-2 flex-wrap">
+        <input type="month" id="period-picker" onchange="handlePeriodChange(event)" class="bg-slate-950/40 border border-white/20 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-emerald-300">
+        <div class="flex gap-2" id="action-header-buttons"></div>
       </div>
     </div>
 
-    <!-- WFO Progress & KPI Cards -->
+    <!-- KPI -->
     <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-      
       <div class="md:col-span-2 bg-slate-950/20 backdrop-blur-md border border-white/15 rounded-2xl p-5 flex flex-col justify-between shadow-sm relative overflow-hidden">
         <div class="flex items-center justify-between">
           <div>
             <p class="text-[11px] text-white/80 font-medium uppercase tracking-wider">Durasi WFO Bulan Ini (Bersih)</p>
             <div class="flex items-baseline gap-2 mt-1">
               <h3 class="text-3xl font-extrabold text-white" id="wfo-total-hours">0</h3>
-              <span class="text-xs text-white/80">/ 60 Jam Minimal</span>
+              <span class="text-xs text-white/80">/ <span id="wfo-target-label">60</span> Jam Minimal</span>
             </div>
           </div>
           <span id="wfo-status-badge" class="px-3 py-1 rounded-full text-xs font-bold bg-emerald-400/20 text-emerald-100 border border-emerald-300/30 flex items-center gap-1 backdrop-blur-sm">
             <i data-lucide="clock" class="w-3.5 h-3.5 text-emerald-300"></i> Loading...
           </span>
         </div>
-
         <div class="mt-4 space-y-1.5">
           <div class="w-full bg-slate-950/30 h-3 rounded-full overflow-hidden p-0.5 border border-white/15">
             <div id="wfo-progress-bar" class="bg-gradient-to-r from-teal-300 via-emerald-300 to-green-300 h-full rounded-full transition-all duration-1000" style="width: 0%"></div>
           </div>
           <div class="flex justify-between text-[10px] text-white/80 font-medium">
             <span>0 Jam</span>
-            <span>Target: 60 Jam</span>
+            <span>Target: <span id="wfo-target-label-2">60</span> Jam</span>
             <span id="wfo-done-text" class="text-emerald-200 font-bold">0 Jam Selesai</span>
           </div>
         </div>
@@ -182,36 +160,29 @@
           <h3 class="text-2xl font-bold text-white mt-1" id="kpi-days-count">0 Hari</h3>
           <p class="text-[10px] text-white/70 mt-0.5" id="kpi-avg-hours">Rata-rata 0 Jam / Hari</p>
         </div>
-        <div class="p-3 bg-white/10 text-emerald-200 border border-white/15 rounded-xl">
-          <i data-lucide="calendar-check" class="w-6 h-6"></i>
-        </div>
+        <div class="p-3 bg-white/10 text-emerald-200 border border-white/15 rounded-xl"><i data-lucide="calendar-check" class="w-6 h-6"></i></div>
       </div>
 
       <div class="bg-slate-950/20 backdrop-blur-md border border-white/15 rounded-2xl p-5 flex items-center justify-between shadow-sm">
         <div>
-          <p class="text-[11px] text-white/80 font-medium">Total Reimbursement Approved</p>
+          <p class="text-[11px] text-white/80 font-medium" id="kpi-reimburse-label">Total Reimbursement Approved</p>
           <h3 class="text-2xl font-bold text-emerald-200 mt-1" id="kpi-reimburse-total">Rp 0</h3>
           <p class="text-[10px] text-amber-200 mt-0.5" id="kpi-pending-count">0 Pengajuan Pending</p>
         </div>
-        <div class="p-3 bg-white/10 text-teal-200 border border-white/15 rounded-xl">
-          <i data-lucide="wallet" class="w-6 h-6"></i>
-        </div>
+        <div class="p-3 bg-white/10 text-teal-200 border border-white/15 rounded-xl"><i data-lucide="wallet" class="w-6 h-6"></i></div>
       </div>
-
     </div>
 
-    <!-- Main Content Grid -->
+    <!-- Grid -->
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-      
-      <!-- Tabel Presensi -->
+
       <div class="lg:col-span-8 bg-slate-950/20 backdrop-blur-md border border-white/15 rounded-2xl overflow-hidden flex flex-col">
         <div class="p-4 border-b border-white/15 flex items-center justify-between">
           <h3 class="text-xs font-bold text-white flex items-center gap-2">
-            <i data-lucide="clock" class="w-4 h-4 text-emerald-300"></i> Rincian Presensi WFO September 2026
+            <i data-lucide="clock" class="w-4 h-4 text-emerald-300"></i> Rincian Presensi WFO <span id="attendance-period-title"></span>
           </h3>
           <span class="text-[10px] text-white/80 bg-slate-950/30 border border-white/15 px-2.5 py-1 rounded-lg" id="attendance-count-badge">0 Sesi Tercatat</span>
         </div>
-
         <div class="overflow-x-auto">
           <table class="w-full text-left border-collapse text-xs">
             <thead>
@@ -225,14 +196,11 @@
                 <th class="p-3 text-center">Status</th>
               </tr>
             </thead>
-            <tbody id="attendance-table-body" class="divide-y divide-white/10 text-slate-100">
-              <!-- Render via JS -->
-            </tbody>
+            <tbody id="attendance-table-body" class="divide-y divide-white/10 text-slate-100"></tbody>
           </table>
         </div>
       </div>
 
-      <!-- Panel Reimbursement & Approval -->
       <div class="lg:col-span-4 bg-slate-950/20 backdrop-blur-md border border-white/15 rounded-2xl p-5 flex flex-col space-y-4">
         <div class="flex items-center justify-between border-b border-white/15 pb-3">
           <h3 class="text-xs font-bold text-white flex items-center gap-2" id="reimburse-panel-title">
@@ -240,20 +208,14 @@
           </h3>
           <button id="btn-add-reimburse-small" onclick="openReimburseModal()" class="text-[10px] text-emerald-200 font-semibold hover:underline">+ Tambah</button>
         </div>
-
-        <div class="flex-1 space-y-3 overflow-y-auto custom-scrollbar pr-1 max-h-[420px]" id="reimburse-list">
-          <!-- Render via JS -->
-        </div>
+        <div class="flex-1 space-y-3 overflow-y-auto custom-scrollbar pr-1 max-h-[420px]" id="reimburse-list"></div>
       </div>
-
     </div>
-
   </main>
 
   <!-- MODAL: FORM REIMBURSEMENT -->
   <div id="reimburse-modal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
     <div class="bg-slate-900 border border-emerald-500/30 w-full max-w-lg rounded-2xl flex flex-col shadow-2xl overflow-hidden">
-      
       <div class="px-6 py-4 border-b border-white/10 flex items-center justify-between bg-slate-800/50">
         <h3 class="text-sm font-bold text-white flex items-center gap-2">
           <i data-lucide="scan-line" class="w-4 h-4 text-emerald-400"></i> AI Reimbursement Auto-Scan
@@ -264,7 +226,6 @@
       </div>
 
       <form onsubmit="handleSubmitReimbursement(event)" class="p-6 space-y-4 text-xs">
-        
         <div class="border-2 border-dashed border-emerald-500/30 hover:border-emerald-400 rounded-xl p-5 text-center cursor-pointer transition bg-slate-950/50" onclick="document.getElementById('receipt-file').click()">
           <i data-lucide="upload-cloud" class="w-8 h-8 text-emerald-400 mx-auto mb-2"></i>
           <p class="font-semibold text-slate-200">Unggah Bukti Struk / Kuitansi</p>
@@ -281,13 +242,11 @@
             <label class="block font-semibold text-slate-300 mb-1">Merchant / Judul Pengeluaran</label>
             <input type="text" id="reimburse-title" required placeholder="Contoh: Grab / Bluebird / Solaria" class="w-full bg-slate-950 border border-white/10 rounded-xl px-3.5 py-2.5 text-slate-100 focus:outline-none focus:border-emerald-400">
           </div>
-
           <div class="grid grid-cols-2 gap-3">
             <div>
               <label class="block font-semibold text-slate-300 mb-1">Tanggal Transaksi</label>
               <input type="date" id="reimburse-date" required class="w-full bg-slate-950 border border-white/10 rounded-xl px-3 py-2.5 text-slate-100 focus:outline-none focus:border-emerald-400">
             </div>
-
             <div>
               <label class="block font-semibold text-slate-300 mb-1">Kategori</label>
               <select id="reimburse-category" required class="w-full bg-slate-950 border border-white/10 rounded-xl px-3 py-2.5 text-slate-100 focus:outline-none focus:border-emerald-400">
@@ -298,10 +257,9 @@
               </select>
             </div>
           </div>
-
           <div>
             <label class="block font-semibold text-slate-300 mb-1">Nominal Klaim (Rp)</label>
-            <input type="number" id="reimburse-amount" required placeholder="Contoh: 150000" class="w-full bg-slate-950 border border-white/10 rounded-xl px-3.5 py-2.5 text-slate-100 focus:outline-none focus:border-emerald-400">
+            <input type="number" id="reimburse-amount" required min="1" placeholder="Contoh: 150000" class="w-full bg-slate-950 border border-white/10 rounded-xl px-3.5 py-2.5 text-slate-100 focus:outline-none focus:border-emerald-400">
           </div>
         </div>
 
@@ -311,23 +269,85 @@
             Kirim ke Head of Directorate
           </button>
         </div>
-
       </form>
     </div>
   </div>
 
-
   <!-- ==================== JAVASCRIPT & SUPABASE LOGIC ==================== -->
   <script>
-    // --- 1. INISIALISASI SUPABASE CLIENT (DENGAN ANON KEY KAMU) ---
+    // --- 1. SUPABASE CLIENT ---
     const SUPABASE_URL = 'https://fjffclkikyanizsxtjnp.supabase.co';
     const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZqZmZjbGtpa3lhbml6c3h0am5wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI1MzQ0MzEsImV4cCI6MjEwODExMDQzMX0.fmUt4V8IYcKrNwEjgm7W811BRfyK2KTW7NxiAs3noR0';
     const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
     let currentUserId = null;
     let currentUserProfile = null;
+    let realtimeChannel = null;
 
-    // --- 2. AUTH & LOGIN DEMO HANDLERS ---
+    // Periode default (format YYYY-MM). Ubah lewat picker di header.
+    let currentPeriod = '2026-09';
+
+    // --- HELPERS ---
+    function escapeHtml(value) {
+      return String(value ?? '')
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+    }
+
+    function showError(context, error) {
+      console.error(`[${context}]`, error);
+      const msg = error && error.message ? error.message : String(error);
+      let hint = '';
+      if (error && (error.code === '42501' || /row-level security|permission denied/i.test(msg))) {
+        hint = ' → Kemungkinan RLS memblokir akses. Buat policy untuk role anon di Supabase.';
+      }
+      const banner = document.getElementById('error-banner');
+      document.getElementById('error-banner-text').innerText = `${context}: ${msg}${hint}`;
+      banner.classList.remove('hidden');
+    }
+
+    function setConnection(ok, text) {
+      document.getElementById('conn-dot').className =
+        'w-1.5 h-1.5 rounded-full ' + (ok ? 'bg-emerald-300' : 'bg-red-400') + (ok ? ' animate-pulse' : '');
+      document.getElementById('conn-text').innerText = text;
+    }
+
+    // Samakan penulisan role dari DB: "Head of Directorate", "head_of_directorate", dst.
+    function normalizeRole(role) {
+      const r = String(role || '').toLowerCase().replace(/[\s_-]+/g, '');
+      if (r === 'employee') return 'Employee';
+      if (r === 'headofdirectorate' || r === 'head') return 'Head_of_Directorate';
+      if (r === 'hrgaadmin' || r === 'hrga') return 'HRGA_Admin';
+      return null;
+    }
+
+    function getPeriodRange(period) {
+      const [y, m] = period.split('-').map(Number);
+      const start = `${period}-01`;
+      const lastDay = new Date(y, m, 0).getDate();
+      const end = `${period}-${String(lastDay).padStart(2, '0')}`;
+      return { start, end };
+    }
+
+    function formatPeriodLabel(period) {
+      const [y, m] = period.split('-').map(Number);
+      return new Date(y, m - 1, 1).toLocaleDateString('id-ID', { month: 'long', year: 'numeric' });
+    }
+
+    function updatePeriodUI() {
+      const label = formatPeriodLabel(currentPeriod);
+      document.getElementById('period-label').innerText = label;
+      document.getElementById('attendance-period-title').innerText = label;
+      document.getElementById('period-picker').value = currentPeriod;
+    }
+
+    function handlePeriodChange(e) {
+      if (!e.target.value) return;
+      currentPeriod = e.target.value;
+      loadDashboardData();
+    }
+
+    // --- 2. AUTH DEMO ---
     function quickLoginDemo(userId) {
       currentUserId = userId;
       document.getElementById('login-modal').classList.add('hidden');
@@ -337,7 +357,6 @@
     function handleManualLogin(e) {
       e.preventDefault();
       const username = document.getElementById('login-username').value.toLowerCase();
-      
       if (username.includes('budi') || username.includes('head')) {
         quickLoginDemo('USR-002');
       } else if (username.includes('siti') || username.includes('hrga')) {
@@ -350,252 +369,325 @@
     function handleLogout() {
       currentUserId = null;
       currentUserProfile = null;
+      if (realtimeChannel) {
+        _supabase.removeChannel(realtimeChannel);
+        realtimeChannel = null;
+      }
       document.getElementById('login-modal').classList.remove('hidden');
     }
 
-    // --- 3. FETCH DATA DASHBOARD UTAMA ---
+    // --- 3. REALTIME (auto-refresh saat data di Supabase berubah) ---
+    let refreshTimer = null;
+    function scheduleRefresh() {
+      clearTimeout(refreshTimer);
+      refreshTimer = setTimeout(() => { if (currentUserId) loadDashboardData(); }, 300);
+    }
+
+    function startRealtime() {
+      if (realtimeChannel) return;
+      realtimeChannel = _supabase
+        .channel('hypetrack-changes')
+        .on('postgres_changes', { event: '*', schema: 'public', table: 'reimbursements' }, scheduleRefresh)
+        .on('postgres_changes', { event: '*', schema: 'public', table: 'attendance' }, scheduleRefresh)
+        .subscribe((status) => {
+          if (status === 'SUBSCRIBED') setConnection(true, 'Connected (Realtime)');
+          else if (status === 'CHANNEL_ERROR' || status === 'TIMED_OUT') setConnection(true, 'Connected (tanpa Realtime)');
+        });
+    }
+
+    // --- 4. DASHBOARD UTAMA ---
     async function loadDashboardData() {
       if (!currentUserId) return;
+      updatePeriodUI();
 
-      const { data: profile } = await _supabase
+      const { data: profile, error } = await _supabase
         .from('profiles')
         .select('*')
         .eq('id', currentUserId)
-        .single();
+        .maybeSingle();
 
-      currentUserProfile = profile;
+      if (error) { setConnection(false, 'Error'); showError('Load profil', error); return; }
+      if (!profile) {
+        setConnection(false, 'Profil tidak ditemukan');
+        showError('Load profil', new Error(`Tidak ada baris di tabel "profiles" dengan id = ${currentUserId}. Cek data atau RLS.`));
+        return;
+      }
 
-      if (!profile) return;
+      setConnection(true, 'Connected');
+      currentUserProfile = { ...profile, roleKey: normalizeRole(profile.role) };
 
-      document.getElementById('user-avatar').innerText = profile.full_name.split(' ').map(n=>n[0]).slice(0,2).join('');
-      document.getElementById('user-name').innerText = profile.full_name;
-      document.getElementById('user-company').innerText = profile.company;
-      document.getElementById('user-role-badge').innerText = profile.role;
+      if (!currentUserProfile.roleKey) {
+        showError('Role', new Error(`Nilai role "${profile.role}" tidak dikenali. Gunakan: Employee, Head_of_Directorate, atau HRGA_Admin.`));
+      }
+
+      const fullName = profile.full_name || '-';
+      document.getElementById('user-avatar').innerText = fullName.split(' ').map(n => n[0]).slice(0, 2).join('').toUpperCase();
+      document.getElementById('user-name').innerText = fullName;
+      document.getElementById('user-company').innerText = profile.company || '-';
+      document.getElementById('user-role-badge').innerText = String(profile.role || '').replace(/_/g, ' ');
 
       const actionHeader = document.getElementById('action-header-buttons');
       const reimbursePanelTitle = document.getElementById('reimburse-panel-title');
       const btnAddSmall = document.getElementById('btn-add-reimburse-small');
+      const kpiLabel = document.getElementById('kpi-reimburse-label');
 
-      if (profile.role === 'Employee') {
-        actionHeader.innerHTML = `<button onclick="openReimburseModal()" class="bg-slate-950/40 hover:bg-slate-950/60 text-white font-bold px-4 py-2 rounded-xl text-xs transition flex items-center gap-2 border border-white/20 shadow-md backdrop-blur-md"><i data-lucide="receipt" class="w-4 h-4 text-emerald-300"></i> Ajukan Reimbursement (AI Scan)</button>`;
-        reimbursePanelTitle.innerHTML = `<i data-lucide="file-text" class="w-4 h-4 text-emerald-300"></i> Riwayat Reimbursement Saya`;
-        btnAddSmall.classList.remove('hidden');
-      } else if (profile.role === 'Head_of_Directorate') {
+      const role = currentUserProfile.roleKey;
+      if (role === 'Head_of_Directorate') {
         actionHeader.innerHTML = `<span class="text-xs bg-amber-500/20 text-amber-200 px-3 py-1.5 rounded-xl border border-amber-400/30 font-semibold">Mode Approval Directorate Head</span>`;
         reimbursePanelTitle.innerHTML = `<i data-lucide="check-square" class="w-4 h-4 text-amber-300"></i> Antrean Approval (Level 1 - Head)`;
         btnAddSmall.classList.add('hidden');
-      } else if (profile.role === 'HRGA_Admin') {
+        kpiLabel.innerText = 'Total Reimbursement Approved (Semua)';
+      } else if (role === 'HRGA_Admin') {
         actionHeader.innerHTML = `<span class="text-xs bg-emerald-500/20 text-emerald-200 px-3 py-1.5 rounded-xl border border-emerald-400/30 font-semibold">Mode Final Approval HRGA</span>`;
         reimbursePanelTitle.innerHTML = `<i data-lucide="shield-check" class="w-4 h-4 text-emerald-300"></i> Antrean Final Approval (Level 2 - HRGA)`;
         btnAddSmall.classList.add('hidden');
+        kpiLabel.innerText = 'Total Reimbursement Approved (Semua)';
+      } else {
+        // Employee (default)
+        actionHeader.innerHTML = `<button onclick="openReimburseModal()" class="bg-slate-950/40 hover:bg-slate-950/60 text-white font-bold px-4 py-2 rounded-xl text-xs transition flex items-center gap-2 border border-white/20 shadow-md backdrop-blur-md"><i data-lucide="receipt" class="w-4 h-4 text-emerald-300"></i> Ajukan Reimbursement (AI Scan)</button>`;
+        reimbursePanelTitle.innerHTML = `<i data-lucide="file-text" class="w-4 h-4 text-emerald-300"></i> Riwayat Reimbursement Saya`;
+        btnAddSmall.classList.remove('hidden');
+        kpiLabel.innerText = 'Total Reimbursement Approved';
       }
 
       await loadAttendance();
       await loadReimbursements();
 
       lucide.createIcons();
+      startRealtime();
     }
 
-    // --- 4. LOAD DATA PRESENSI ---
+    // --- 5. PRESENSI ---
     async function loadAttendance() {
-      const { data: list } = await _supabase
+      const { start, end } = getPeriodRange(currentPeriod);
+
+      const { data: list, error } = await _supabase
         .from('attendance')
         .select('*')
-        .eq('user_id', currentUserId);
+        .eq('user_id', currentUserId)
+        .gte('date', start)
+        .lte('date', end)
+        .order('date', { ascending: true });
 
+      if (error) showError('Load presensi', error);
+
+      const rows = list || [];
       const tbody = document.getElementById('attendance-table-body');
-      let totalHours = 0;
-
-      (list || []).forEach(item => totalHours += parseFloat(item.duration_hours));
+      const totalHours = rows.reduce((sum, item) => sum + (parseFloat(item.duration_hours) || 0), 0);
+      const target = Number(currentUserProfile.target_wfo_hours) || 60;
+      const percentage = Math.min(Math.round((totalHours / target) * 100), 100);
 
       document.getElementById('wfo-total-hours').innerText = totalHours.toFixed(1);
-      document.getElementById('kpi-days-count').innerText = `${list ? list.length : 0} Hari`;
-      
-      const avg = list && list.length > 0 ? (totalHours / list.length).toFixed(1) : 0;
-      document.getElementById('kpi-avg-hours').innerText = `Rata-rata ${avg} Jam / Hari`;
-      document.getElementById('attendance-count-badge').innerText = `${list ? list.length : 0} Sesi Tercatat`;
-
-      const target = currentUserProfile.target_wfo_hours || 60;
-      const percentage = Math.min(Math.round((totalHours / target) * 100), 100);
-      
+      document.getElementById('wfo-target-label').innerText = target;
+      document.getElementById('wfo-target-label-2').innerText = target;
+      document.getElementById('kpi-days-count').innerText = `${rows.length} Hari`;
+      document.getElementById('kpi-avg-hours').innerText = `Rata-rata ${rows.length ? (totalHours / rows.length).toFixed(1) : 0} Jam / Hari`;
+      document.getElementById('attendance-count-badge').innerText = `${rows.length} Sesi Tercatat`;
       document.getElementById('wfo-progress-bar').style.width = `${percentage}%`;
       document.getElementById('wfo-done-text').innerText = `${totalHours.toFixed(1)} Jam Selesai`;
 
+      const badge = document.getElementById('wfo-status-badge');
       if (totalHours >= target) {
-        document.getElementById('wfo-status-badge').className = "px-3 py-1 rounded-full text-xs font-bold bg-emerald-400/20 text-emerald-100 border border-emerald-300/30 flex items-center gap-1 backdrop-blur-sm";
-        document.getElementById('wfo-status-badge').innerHTML = `<i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-emerald-300"></i> Target Terpenuhi (${percentage}%)`;
+        badge.className = "px-3 py-1 rounded-full text-xs font-bold bg-emerald-400/20 text-emerald-100 border border-emerald-300/30 flex items-center gap-1 backdrop-blur-sm";
+        badge.innerHTML = `<i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-emerald-300"></i> Target Terpenuhi (${percentage}%)`;
       } else {
-        document.getElementById('wfo-status-badge').className = "px-3 py-1 rounded-full text-xs font-bold bg-amber-400/20 text-amber-100 border border-amber-300/30 flex items-center gap-1 backdrop-blur-sm";
-        document.getElementById('wfo-status-badge').innerHTML = `<i data-lucide="clock" class="w-3.5 h-3.5 text-amber-300"></i> Belum Terpenuhi (${percentage}%)`;
+        badge.className = "px-3 py-1 rounded-full text-xs font-bold bg-amber-400/20 text-amber-100 border border-amber-300/30 flex items-center gap-1 backdrop-blur-sm";
+        badge.innerHTML = `<i data-lucide="clock" class="w-3.5 h-3.5 text-amber-300"></i> Belum Terpenuhi (${percentage}%)`;
       }
 
-      if (!list || list.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="7" class="p-4 text-center text-white/50">Belum ada data presensi.</td></tr>`;
+      if (rows.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="7" class="p-4 text-center text-white/50">Belum ada data presensi untuk periode ini.</td></tr>`;
         return;
       }
 
-      tbody.innerHTML = list.map(item => `
+      tbody.innerHTML = rows.map(item => `
         <tr class="hover:bg-white/10 transition">
-          <td class="p-3 font-semibold text-white">${item.date}</td>
-          <td class="p-3 text-white/70">${item.shift}</td>
-          <td class="p-3 text-white/70">${item.schedule}</td>
-          <td class="p-3 font-semibold text-emerald-300">${item.clock_in}</td>
-          <td class="p-3 font-semibold text-teal-200">${item.clock_out}</td>
-          <td class="p-3 text-right font-bold text-emerald-200">${item.duration_text}</td>
+          <td class="p-3 font-semibold text-white">${escapeHtml(item.date)}</td>
+          <td class="p-3 text-white/70">${escapeHtml(item.shift)}</td>
+          <td class="p-3 text-white/70">${escapeHtml(item.schedule)}</td>
+          <td class="p-3 font-semibold text-emerald-300">${escapeHtml(item.clock_in)}</td>
+          <td class="p-3 font-semibold text-teal-200">${escapeHtml(item.clock_out)}</td>
+          <td class="p-3 text-right font-bold text-emerald-200">${escapeHtml(item.duration_text)}</td>
           <td class="p-3 text-center">
-            <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-400/20 text-emerald-200 border border-emerald-300/30">
-              ${item.status}
-            </span>
+            <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-400/20 text-emerald-200 border border-emerald-300/30">${escapeHtml(item.status)}</span>
           </td>
         </tr>
       `).join('');
     }
 
-    // --- 5. LOAD DATA REIMBURSEMENT ---
+    // --- 6. REIMBURSEMENT ---
     async function loadReimbursements() {
+      const role = currentUserProfile.roleKey;
+
       let query = _supabase.from('reimbursements').select('*').order('created_at', { ascending: false });
 
-      if (currentUserProfile.role === 'Employee') {
-        query = query.eq('user_id', currentUserId);
-      } else if (currentUserProfile.role === 'Head_of_Directorate') {
-        query = query.or('current_step.eq.1,status.ilike.%Head%');
-      } else if (currentUserProfile.role === 'HRGA_Admin') {
+      if (role === 'Head_of_Directorate') {
+        // Antrean Head: yang menunggu (step 1) + riwayat yang sudah ia putuskan
+        query = query.or('current_step.eq.1,status.eq.Pending_Head,status.eq.Rejected_by_Head');
+      } else if (role === 'HRGA_Admin') {
         query = query.gte('current_step', 2);
+      } else {
+        query = query.eq('user_id', currentUserId);
       }
 
-      const { data: displayItems } = await query;
-      const container = document.getElementById('reimburse-list');
+      const { data: displayItems, error } = await query;
+      if (error) showError('Load reimbursement', error);
 
-      const { data: approvedItems } = await _supabase
+      // Total approved: Employee = miliknya sendiri, Head/HRGA = semua karyawan
+      let approvedQuery = _supabase
         .from('reimbursements')
         .select('amount')
-        .eq('user_id', 'USR-001')
         .in('status', ['Approved', 'Paid']);
+      if (role === 'Employee' || !role) approvedQuery = approvedQuery.eq('user_id', currentUserId);
 
-      const totalApproved = (approvedItems || []).reduce((sum, item) => sum + parseFloat(item.amount), 0);
-      const pendingCount = (displayItems || []).filter(r => r.status.startsWith('Pending')).length;
+      const { data: approvedItems, error: approvedError } = await approvedQuery;
+      if (approvedError) showError('Load total approved', approvedError);
+
+      const totalApproved = (approvedItems || []).reduce((sum, item) => sum + (parseFloat(item.amount) || 0), 0);
+      const items = displayItems || [];
+      const pendingCount = items.filter(r => String(r.status || '').startsWith('Pending')).length;
 
       document.getElementById('kpi-reimburse-total').innerText = `Rp ${totalApproved.toLocaleString('id-ID')}`;
       document.getElementById('kpi-pending-count').innerText = `${pendingCount} Pengajuan Pending`;
 
-      if (!displayItems || displayItems.length === 0) {
+      const container = document.getElementById('reimburse-list');
+      if (items.length === 0) {
         container.innerHTML = `<div class="p-4 text-center text-xs text-white/50 bg-slate-950/20 rounded-xl">Tidak ada data reimbursement.</div>`;
         return;
       }
 
-      container.innerHTML = displayItems.map(item => {
+      container.innerHTML = items.map(item => {
+        const status = String(item.status || '');
+        const step = Number(item.current_step);
         let statusBadge = '';
-        if (item.status === 'Pending_Head') {
+
+        if (status === 'Pending_Head') {
           statusBadge = `<span class="px-2 py-0.5 rounded text-[9px] font-bold bg-amber-400/20 text-amber-200 border border-amber-300/30">Pending: Head Approval</span>`;
-        } else if (item.status === 'Pending_HRGA') {
+        } else if (status === 'Pending_HRGA') {
           statusBadge = `<span class="px-2 py-0.5 rounded text-[9px] font-bold bg-blue-400/20 text-blue-200 border border-blue-300/30">Pending: HRGA Final</span>`;
-        } else if (item.status === 'Approved' || item.status === 'Paid') {
+        } else if (status === 'Approved' || status === 'Paid') {
           statusBadge = `<span class="px-2 py-0.5 rounded text-[9px] font-bold bg-emerald-400/20 text-emerald-200 border border-emerald-300/30">Approved / Paid</span>`;
-        } else if (item.status.startsWith('Rejected')) {
+        } else if (status.startsWith('Rejected')) {
           statusBadge = `<span class="px-2 py-0.5 rounded text-[9px] font-bold bg-red-400/20 text-red-200 border border-red-300/30">Rejected</span>`;
+        } else {
+          statusBadge = `<span class="px-2 py-0.5 rounded text-[9px] font-bold bg-slate-400/20 text-slate-200 border border-slate-300/30">${escapeHtml(status || '-')}</span>`;
         }
 
         let actionButtonsHtml = '';
-        if (currentUserProfile.role === 'Head_of_Directorate' && item.current_step === 1) {
+        if (role === 'Head_of_Directorate' && step === 1) {
           actionButtonsHtml = `
             <div class="flex gap-2 pt-2 border-t border-white/10">
-              <button onclick="approveByHead('${item.id}')" class="flex-1 bg-emerald-500/20 hover:bg-emerald-500/40 text-emerald-200 py-1 rounded text-[10px] font-bold border border-emerald-400/30">
-                ✓ Approve (Kirim HRGA)
-              </button>
-              <button onclick="rejectByHead('${item.id}')" class="flex-1 bg-red-500/20 hover:bg-red-500/40 text-red-200 py-1 rounded text-[10px] font-bold border border-red-400/30">
-                ✕ Reject
-              </button>
-            </div>
-          `;
-        } else if (currentUserProfile.role === 'HRGA_Admin' && item.current_step === 2) {
+              <button onclick="approveByHead('${escapeHtml(item.id)}')" class="flex-1 bg-emerald-500/20 hover:bg-emerald-500/40 text-emerald-200 py-1 rounded text-[10px] font-bold border border-emerald-400/30">✓ Approve (Kirim HRGA)</button>
+              <button onclick="rejectByHead('${escapeHtml(item.id)}')" class="flex-1 bg-red-500/20 hover:bg-red-500/40 text-red-200 py-1 rounded text-[10px] font-bold border border-red-400/30">✕ Reject</button>
+            </div>`;
+        } else if (role === 'HRGA_Admin' && step === 2) {
           actionButtonsHtml = `
             <div class="flex gap-2 pt-2 border-t border-white/10">
-              <button onclick="approveByHRGA('${item.id}')" class="flex-1 bg-emerald-500/20 hover:bg-emerald-500/40 text-emerald-200 py-1 rounded text-[10px] font-bold border border-emerald-400/30">
-                ✓ Final Approve & Pay
-              </button>
-              <button onclick="rejectByHRGA('${item.id}')" class="flex-1 bg-red-500/20 hover:bg-red-500/40 text-red-200 py-1 rounded text-[10px] font-bold border border-red-400/30">
-                ✕ Reject
-              </button>
-            </div>
-          `;
+              <button onclick="approveByHRGA('${escapeHtml(item.id)}')" class="flex-1 bg-emerald-500/20 hover:bg-emerald-500/40 text-emerald-200 py-1 rounded text-[10px] font-bold border border-emerald-400/30">✓ Final Approve & Pay</button>
+              <button onclick="rejectByHRGA('${escapeHtml(item.id)}')" class="flex-1 bg-red-500/20 hover:bg-red-500/40 text-red-200 py-1 rounded text-[10px] font-bold border border-red-400/30">✕ Reject</button>
+            </div>`;
         }
 
         return `
           <div class="bg-slate-950/30 border border-white/15 p-3.5 rounded-xl space-y-2">
-            <div class="flex justify-between items-start">
+            <div class="flex justify-between items-start gap-2">
               <div>
-                <p class="font-bold text-white text-xs">${item.title}</p>
-                <p class="text-[10px] text-white/70">${item.user_name} &bull; ${item.date} &bull; ${item.category}</p>
+                <p class="font-bold text-white text-xs">${escapeHtml(item.title)}</p>
+                <p class="text-[10px] text-white/70">${escapeHtml(item.user_name)} &bull; ${escapeHtml(item.date)} &bull; ${escapeHtml(item.category)}</p>
               </div>
               ${statusBadge}
             </div>
             <div class="flex justify-between items-center text-xs">
               <span class="text-white/70 text-[10px]">Total Klaim:</span>
-              <span class="font-bold text-emerald-200">Rp ${parseInt(item.amount).toLocaleString('id-ID')}</span>
+              <span class="font-bold text-emerald-200">Rp ${(parseInt(item.amount) || 0).toLocaleString('id-ID')}</span>
             </div>
-            ${item.head_note ? `<p class="text-[9px] text-emerald-300 italic">Head Note: \${item.head_note}</p>` : ''}
+            ${item.head_note ? `<p class="text-[9px] text-emerald-300 italic">Head Note: ${escapeHtml(item.head_note)}</p>` : ''}
+            ${item.hrga_note ? `<p class="text-[9px] text-teal-200 italic">HRGA Note: ${escapeHtml(item.hrga_note)}</p>` : ''}
             ${actionButtonsHtml}
-          </div>
-        `;
+          </div>`;
       }).join('');
+
+      lucide.createIcons();
     }
 
-    // --- 6. APPROVAL ACTIONS ---
-    async function approveByHead(id) {
-      await _supabase.from('reimbursements').update({ current_step: 2, status: 'Pending_HRGA', head_note: 'Approved by Head of Directorate' }).eq('id', id);
+    // --- 7. APPROVAL ACTIONS (dengan cek error & .select() agar kelihatan kalau 0 baris ter-update) ---
+    async function updateReimbursement(id, fields, label) {
+      const { data, error } = await _supabase
+        .from('reimbursements')
+        .update(fields)
+        .eq('id', id)
+        .select();
+
+      if (error) { showError(label, error); return false; }
+      if (!data || data.length === 0) {
+        showError(label, new Error('Tidak ada baris yang ter-update. Biasanya karena RLS tidak mengizinkan UPDATE untuk role anon, atau id tidak ditemukan.'));
+        return false;
+      }
       await loadDashboardData();
+      return true;
     }
 
-    async function rejectByHead(id) {
-      await _supabase.from('reimbursements').update({ current_step: 0, status: 'Rejected_by_Head', head_note: 'Rejected by Head of Directorate' }).eq('id', id);
-      await loadDashboardData();
+    function approveByHead(id) {
+      return updateReimbursement(id, { current_step: 2, status: 'Pending_HRGA', head_note: 'Approved by Head of Directorate' }, 'Approve Head');
+    }
+    function rejectByHead(id) {
+      return updateReimbursement(id, { current_step: 0, status: 'Rejected_by_Head', head_note: 'Rejected by Head of Directorate' }, 'Reject Head');
+    }
+    function approveByHRGA(id) {
+      return updateReimbursement(id, { current_step: 3, status: 'Approved', hrga_note: 'Verified & Paid by HRGA' }, 'Approve HRGA');
+    }
+    function rejectByHRGA(id) {
+      return updateReimbursement(id, { current_step: 0, status: 'Rejected_by_HRGA', hrga_note: 'Rejected by HRGA Admin' }, 'Reject HRGA');
     }
 
-    async function approveByHRGA(id) {
-      await _supabase.from('reimbursements').update({ current_step: 3, status: 'Approved', hrga_note: 'Verified & Paid by HRGA' }).eq('id', id);
-      await loadDashboardData();
-    }
-
-    async function rejectByHRGA(id) {
-      await _supabase.from('reimbursements').update({ current_step: 0, status: 'Rejected_by_HRGA', hrga_note: 'Rejected by HRGA Admin' }).eq('id', id);
-      await loadDashboardData();
-    }
-
-    // --- 7. SUBMIT FORM REIMBURSEMENT ---
+    // --- 8. SUBMIT REIMBURSEMENT ---
     async function handleSubmitReimbursement(e) {
       e.preventDefault();
-      const title = document.getElementById('reimburse-title').value;
-      const date = document.getElementById('reimburse-date').value;
-      const category = document.getElementById('reimburse-category').value;
-      const amount = parseInt(document.getElementById('reimburse-amount').value);
+      if (!currentUserProfile) return;
 
-      await _supabase.from('reimbursements').insert([{
+      const form = e.target;
+      const btn = document.getElementById('btn-submit-reimburse');
+      btn.disabled = true;
+
+      const payload = {
         user_id: currentUserProfile.id,
         user_name: currentUserProfile.full_name,
-        title: title,
-        category: category,
-        amount: amount,
-        date: date,
+        title: document.getElementById('reimburse-title').value.trim(),
+        category: document.getElementById('reimburse-category').value,
+        amount: parseInt(document.getElementById('reimburse-amount').value, 10),
+        date: document.getElementById('reimburse-date').value,
         current_step: 1,
         status: 'Pending_Head'
-      }]);
+      };
 
-      e.target.reset();
+      const { data, error } = await _supabase.from('reimbursements').insert([payload]).select();
+      btn.disabled = false;
+
+      if (error) { showError('Kirim reimbursement', error); return; }
+      if (!data || data.length === 0) {
+        showError('Kirim reimbursement', new Error('Insert tidak mengembalikan data. Cek policy INSERT/SELECT untuk role anon.'));
+        return;
+      }
+
+      form.reset();
       closeReimburseModal();
       await loadDashboardData();
       alert("Pengajuan reimbursement berhasil dikirim ke Database Supabase!");
     }
 
-    function openReimburseModal() { document.getElementById('reimburse-modal').classList.remove('hidden'); }
-    function closeReimburseModal() { 
-      document.getElementById('reimburse-modal').classList.add('hidden'); 
+    function openReimburseModal() {
+      document.getElementById('reimburse-modal').classList.remove('hidden');
+      lucide.createIcons();
+    }
+    function closeReimburseModal() {
+      document.getElementById('reimburse-modal').classList.add('hidden');
       document.getElementById('scan-status').classList.add('hidden');
     }
+
     function simulateAiScan(e) {
       if (!e.target.files.length) return;
       const status = document.getElementById('scan-status');
       status.classList.remove('hidden');
-
       setTimeout(() => {
         status.classList.add('hidden');
         document.getElementById('reimburse-title').value = "Taxi Grab Meeting BPOM";
@@ -606,6 +698,7 @@
     }
 
     window.addEventListener('DOMContentLoaded', () => {
+      updatePeriodUI();
       lucide.createIcons();
     });
   </script>
