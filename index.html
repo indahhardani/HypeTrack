@@ -35,7 +35,8 @@
     <div class="bg-white text-slate-900 w-full max-w-md rounded-3xl p-8 shadow-2xl space-y-6 border border-white/20 relative">
 
       <div class="text-center space-y-2">
-        <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-teal-400 to-emerald-300 flex items-center justify-center font-black text-slate-900 text-2xl tracking-wider mx-auto shadow-md">HT</div>
+        <!-- Logo diubah dari HT ke YL -->
+        <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-teal-400 to-emerald-300 flex items-center justify-center font-black text-slate-900 text-2xl tracking-wider mx-auto shadow-md">YL</div>
         <h2 class="text-2xl font-extrabold text-slate-900 tracking-tight">YourLog</h2>
       </div>
 
@@ -70,7 +71,6 @@
             <span class="flex items-center gap-1.5"><span class="text-sm">🛡️</span> Siti</span>
             <span class="bg-emerald-200/60 text-emerald-800 text-[9px] px-2 py-0.5 rounded-md uppercase font-extrabold">HRGA</span>
           </button>
-          <!-- Catatan: belum ada user CEO di DB. Ganti 'USR-004' kalau sudah dibuat di tabel profiles. -->
           <button onclick="quickLoginDemo('USR-002')" class="bg-purple-50 hover:bg-purple-100 text-slate-800 p-2.5 rounded-xl border border-purple-200 flex items-center justify-between transition shadow-sm">
             <span class="flex items-center gap-1.5"><span class="text-sm">💼</span> Management</span>
             <span class="bg-purple-200/60 text-purple-800 text-[9px] px-2 py-0.5 rounded-md uppercase font-extrabold">CEO</span>
@@ -87,7 +87,8 @@
   <!-- ==================== 2. HEADER ==================== -->
   <header class="bg-slate-950/20 backdrop-blur-md border-b border-white/15 px-6 py-4 flex items-center justify-between sticky top-0 z-30">
     <div class="flex items-center gap-3">
-      <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-teal-400 to-emerald-300 flex items-center justify-center font-black text-slate-900 shadow-md text-sm tracking-wider">HT</div>
+      <!-- Logo diubah dari HT ke YL -->
+      <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-teal-400 to-emerald-300 flex items-center justify-center font-black text-slate-900 shadow-md text-sm tracking-wider">YL</div>
       <div>
         <h1 class="text-sm font-bold text-white tracking-wide">YourLog <span class="text-[10px] bg-emerald-400/20 text-emerald-200 border border-emerald-300/30 px-2 py-0.5 rounded-full ml-1">Supabase DB</span></h1>
         <p class="text-[10px] text-white/80">Hypefast Ecosystem — Attendance & Approval Engine</p>
@@ -312,7 +313,6 @@
       document.getElementById('conn-text').innerText = text;
     }
 
-    // Samakan penulisan role dari DB: "Head of Directorate", "head_of_directorate", dst.
     function normalizeRole(role) {
       const r = String(role || '').toLowerCase().replace(/[\s_-]+/g, '');
       if (r === 'employee') return 'Employee';
@@ -321,7 +321,6 @@
       return null;
     }
 
-    // Terima "Fri, 4 Sep 2026", "2026-09-04", atau format lain yang dikenali browser
     function parseAttendanceDate(value) {
       if (!value) return null;
       const str = String(value).trim();
@@ -395,7 +394,7 @@
       document.getElementById('login-modal').classList.remove('hidden');
     }
 
-    // --- 3. REALTIME (auto-refresh saat data di Supabase berubah) ---
+    // --- 3. REALTIME ---
     let refreshTimer = null;
     function scheduleRefresh() {
       clearTimeout(refreshTimer);
@@ -462,7 +461,6 @@
         btnAddSmall.classList.add('hidden');
         kpiLabel.innerText = 'Total Reimbursement Approved (Semua)';
       } else {
-        // Employee (default)
         actionHeader.innerHTML = `<button onclick="openReimburseModal()" class="bg-slate-950/40 hover:bg-slate-950/60 text-white font-bold px-4 py-2 rounded-xl text-xs transition flex items-center gap-2 border border-white/20 shadow-md backdrop-blur-md"><i data-lucide="receipt" class="w-4 h-4 text-emerald-300"></i> Ajukan Reimbursement (AI Scan)</button>`;
         reimbursePanelTitle.innerHTML = `<i data-lucide="file-text" class="w-4 h-4 text-emerald-300"></i> Riwayat Reimbursement Saya`;
         btnAddSmall.classList.remove('hidden');
@@ -478,8 +476,6 @@
 
     // --- 5. PRESENSI ---
     async function loadAttendance() {
-      // Kolom date berisi teks seperti "Fri, 4 Sep 2026", jadi filter periode
-      // dilakukan di sisi client, bukan lewat query Supabase.
       const { data: rawList, error } = await _supabase
         .from('attendance')
         .select('*')
@@ -491,7 +487,6 @@
       const rows = (rawList || [])
         .map(item => ({ ...item, _d: parseAttendanceDate(item.date) }))
         .filter(item => item._d && toPeriodKey(item._d) === currentPeriod)
-        // buang baris dobel (tanggal + jam masuk + jam keluar sama)
         .filter(item => {
           const key = `${item._d.getTime()}|${item.clock_in}|${item.clock_out}`;
           if (seen.has(key)) return false;
@@ -549,7 +544,6 @@
       let query = _supabase.from('reimbursements').select('*').order('created_at', { ascending: false });
 
       if (role === 'Head_of_Directorate') {
-        // Antrean Head: yang menunggu (step 1) + riwayat yang sudah ia putuskan
         query = query.or('current_step.eq.1,status.eq.Pending_Head,status.eq.Rejected_by_Head');
       } else if (role === 'HRGA_Admin') {
         query = query.gte('current_step', 2);
@@ -560,7 +554,6 @@
       const { data: displayItems, error } = await query;
       if (error) showError('Load reimbursement', error);
 
-      // Total approved: Employee = miliknya sendiri, Head/HRGA = semua karyawan
       let approvedQuery = _supabase
         .from('reimbursements')
         .select('amount')
@@ -628,8 +621,8 @@
               <span class="text-white/70 text-[10px]">Total Klaim:</span>
               <span class="font-bold text-emerald-200">Rp ${(parseInt(item.amount) || 0).toLocaleString('id-ID')}</span>
             </div>
-            ${item.head_note ? `<p class="text-[9px] text-emerald-300 italic">Head Note: ${escapeHtml(item.head_note)}</p>` : ''}
-            ${item.hrga_note ? `<p class="text-[9px] text-teal-200 italic">HRGA Note: ${escapeHtml(item.hrga_note)}</p>` : ''}
+            ${item.head_note ? `<p class="text-[9px] text-emerald-300 italic">Head Note: \${escapeHtml(item.head_note)}</p>` : ''}
+            ${item.hrga_note ? `<p class="text-[9px] text-teal-200 italic">HRGA Note: \${escapeHtml(item.hrga_note)}</p>` : ''}
             ${actionButtonsHtml}
           </div>`;
       }).join('');
@@ -637,7 +630,7 @@
       lucide.createIcons();
     }
 
-    // --- 7. APPROVAL ACTIONS (dengan cek error & .select() agar kelihatan kalau 0 baris ter-update) ---
+    // --- 7. APPROVAL ACTIONS ---
     async function updateReimbursement(id, fields, label) {
       const { data, error } = await _supabase
         .from('reimbursements')
