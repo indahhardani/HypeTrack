@@ -28,7 +28,7 @@
 </head>
 <body class="bg-gradient-to-r from-[#0060e6] via-[#1f93cb] via-[#3fa9b8] via-[#51c0ad] to-[#6be0b2] text-slate-100 min-h-screen flex flex-col antialiased selection:bg-teal-700 selection:text-white">
 
-  <!-- ==================== 1. MODAL LOGIN DEMO (DESAIN BARU) ==================== -->
+  <!-- ==================== 1. MODAL LOGIN DEMO ==================== -->
   <div id="login-modal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
     <div class="bg-white text-slate-900 w-full max-w-md rounded-3xl p-8 shadow-2xl space-y-6 border border-white/20 relative">
       
@@ -56,7 +56,7 @@
         </button>
       </form>
 
-      <!-- Quick Login Demo Buttons (Persis Tampilan Gambar) -->
+      <!-- Quick Login Demo Buttons -->
       <div class="pt-2 border-t border-slate-100 text-center space-y-3">
         <p class="text-[11px] font-bold text-slate-500 tracking-wide uppercase flex items-center justify-center gap-1">
           <span class="text-amber-500">⚡</span> QUICK LOGIN (PILIH AKUN DEMO)
@@ -81,7 +81,7 @@
             <span class="bg-emerald-200/60 text-emerald-800 text-[9px] px-2 py-0.5 rounded-md uppercase font-extrabold">HRGA</span>
           </button>
 
-          <!-- CEO / Management -->
+          <!-- Management / CEO -->
           <button onclick="quickLoginDemo('USR-002')" class="bg-purple-50 hover:bg-purple-100 text-slate-800 p-2.5 rounded-xl border border-purple-200 flex items-center justify-between transition shadow-sm">
             <span class="flex items-center gap-1.5"><span class="text-sm">💼</span> Management</span>
             <span class="bg-purple-200/60 text-purple-800 text-[9px] px-2 py-0.5 rounded-md uppercase font-extrabold">CEO</span>
@@ -319,9 +319,9 @@
 
   <!-- ==================== JAVASCRIPT & SUPABASE LOGIC ==================== -->
   <script>
-    // --- 1. INISIALISASI SUPABASE CLIENT DENGAN CREDENTIAL KAMU ---
+    // --- 1. INISIALISASI SUPABASE CLIENT (DENGAN ANON KEY KAMU) ---
     const SUPABASE_URL = 'https://fjffclkikyanizsxtjnp.supabase.co';
-    const SUPABASE_KEY = 'sb_publishable_d0DBJe_9-4jbIEZ1OwjgPQ_FX6ARCRT';
+    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZqZmZjbGtpa3lhbml6c3h0am5wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI1MzQ0MzEsImV4cCI6MjEwODExMDQzMX0.fmUt4V8IYcKrNwEjgm7W811BRfyK2KTW7NxiAs3noR0';
     const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
     let currentUserId = null;
@@ -540,7 +540,7 @@
       }).join('');
     }
 
-    // --- 6. APPROVAL ACTIONS DENGAN SUPABASE UPDATE ---
+    // --- 6. APPROVAL ACTIONS ---
     async function approveByHead(id) {
       await _supabase.from('reimbursements').update({ current_step: 2, status: 'Pending_HRGA', head_note: 'Approved by Head of Directorate' }).eq('id', id);
       await loadDashboardData();
