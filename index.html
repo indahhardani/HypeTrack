@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HypeTrack — Prototype (Supabase Connected)</title>
+  <title>HypeTrack — HR Intelligence Platform</title>
   
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -28,28 +28,99 @@
 </head>
 <body class="bg-gradient-to-r from-[#0060e6] via-[#1f93cb] via-[#3fa9b8] via-[#51c0ad] to-[#6be0b2] text-slate-100 min-h-screen flex flex-col antialiased selection:bg-teal-700 selection:text-white">
 
-  <!-- ==================== HEADER & ROLE SWITCHER ==================== -->
-  <header class="bg-slate-950/20 backdrop-blur-md border-b border-white/15 px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-4 sticky top-0 z-30">
+  <!-- ==================== 1. MODAL LOGIN DEMO (DESAIN BARU) ==================== -->
+  <div id="login-modal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="bg-white text-slate-900 w-full max-w-md rounded-3xl p-8 shadow-2xl space-y-6 border border-white/20 relative">
+      
+      <!-- Logo HT -->
+      <div class="text-center space-y-2">
+        <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-teal-400 to-emerald-300 flex items-center justify-center font-black text-slate-900 text-2xl tracking-wider mx-auto shadow-md">
+          HT
+        </div>
+        <h2 class="text-2xl font-extrabold text-slate-900 tracking-tight">HypeTrack</h2>
+      </div>
+
+      <!-- Form Login Manual -->
+      <form onsubmit="handleManualLogin(event)" class="space-y-4 text-xs font-medium">
+        <div>
+          <label class="block font-bold text-blue-900 uppercase tracking-wider mb-1 text-[11px]">Username / Email</label>
+          <input type="text" id="login-username" placeholder="Masukkan username" required class="w-full bg-slate-50 border border-teal-300 rounded-xl px-4 py-3 text-slate-800 placeholder-slate-400 focus:outline-none focus:border-teal-500 focus:ring-2 focus:ring-teal-200 transition">
+        </div>
+        <div>
+          <label class="block font-bold text-blue-900 uppercase tracking-wider mb-1 text-[11px]">Password</label>
+          <input type="password" id="login-password" value="123456" required class="w-full bg-slate-50 border border-teal-300 rounded-xl px-4 py-3 text-slate-800 placeholder-slate-400 focus:outline-none focus:border-teal-500 focus:ring-2 focus:ring-teal-200 transition">
+        </div>
+        
+        <button type="submit" class="w-full bg-gradient-to-r from-blue-600 via-teal-500 to-emerald-400 hover:opacity-90 text-white font-extrabold py-3.5 rounded-xl shadow-lg transition flex items-center justify-center gap-2 text-sm tracking-wide">
+          <i data-lucide="log-in" class="w-4 h-4"></i> LOG IN
+        </button>
+      </form>
+
+      <!-- Quick Login Demo Buttons (Persis Tampilan Gambar) -->
+      <div class="pt-2 border-t border-slate-100 text-center space-y-3">
+        <p class="text-[11px] font-bold text-slate-500 tracking-wide uppercase flex items-center justify-center gap-1">
+          <span class="text-amber-500">⚡</span> QUICK LOGIN (PILIH AKUN DEMO)
+        </p>
+
+        <div class="grid grid-cols-2 gap-2 text-xs font-bold">
+          <!-- Indah - Employee -->
+          <button onclick="quickLoginDemo('USR-001')" class="bg-teal-50 hover:bg-teal-100 text-slate-800 p-2.5 rounded-xl border border-teal-200 flex items-center justify-between transition shadow-sm">
+            <span class="flex items-center gap-1.5"><span class="text-sm">👩‍💻</span> Indah</span>
+            <span class="bg-teal-200/60 text-teal-800 text-[9px] px-2 py-0.5 rounded-md uppercase font-extrabold">Staff</span>
+          </button>
+
+          <!-- Budi - Head -->
+          <button onclick="quickLoginDemo('USR-002')" class="bg-amber-50 hover:bg-amber-100 text-slate-800 p-2.5 rounded-xl border border-amber-200 flex items-center justify-between transition shadow-sm">
+            <span class="flex items-center gap-1.5"><span class="text-sm">👨‍💼</span> Pak Budi</span>
+            <span class="bg-amber-200/60 text-amber-800 text-[9px] px-2 py-0.5 rounded-md uppercase font-extrabold">Head</span>
+          </button>
+
+          <!-- Siti - HRGA -->
+          <button onclick="quickLoginDemo('USR-003')" class="bg-emerald-50 hover:bg-emerald-100 text-slate-800 p-2.5 rounded-xl border border-emerald-200 flex items-center justify-between transition shadow-sm">
+            <span class="flex items-center gap-1.5"><span class="text-sm">🛡️</span> Siti</span>
+            <span class="bg-emerald-200/60 text-emerald-800 text-[9px] px-2 py-0.5 rounded-md uppercase font-extrabold">HRGA</span>
+          </button>
+
+          <!-- CEO / Management -->
+          <button onclick="quickLoginDemo('USR-002')" class="bg-purple-50 hover:bg-purple-100 text-slate-800 p-2.5 rounded-xl border border-purple-200 flex items-center justify-between transition shadow-sm">
+            <span class="flex items-center gap-1.5"><span class="text-sm">💼</span> Management</span>
+            <span class="bg-purple-200/60 text-purple-800 text-[9px] px-2 py-0.5 rounded-md uppercase font-extrabold">CEO</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="text-center text-xs text-slate-500 font-medium pt-1">
+        Belum punya akun? <a href="#" onclick="alert('Silakan hubungi admin HRGA untuk pendaftaran akun!')" class="text-blue-600 font-bold hover:underline">Daftar Akun Baru</a>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ==================== 2. HEADER NAVIGATION ==================== -->
+  <header class="bg-slate-950/20 backdrop-blur-md border-b border-white/15 px-6 py-4 flex items-center justify-between sticky top-0 z-30">
     <div class="flex items-center gap-3">
       <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-teal-400 to-emerald-300 flex items-center justify-center font-black text-slate-900 shadow-md text-sm tracking-wider">
         HT
       </div>
       <div>
-        <h1 class="text-sm font-bold text-white tracking-wide">HypeTrack <span class="text-[10px] bg-emerald-400/20 text-emerald-200 border border-emerald-300/30 px-2 py-0.5 rounded-full ml-1">Live DB</span></h1>
+        <h1 class="text-sm font-bold text-white tracking-wide">HypeTrack <span class="text-[10px] bg-emerald-400/20 text-emerald-200 border border-emerald-300/30 px-2 py-0.5 rounded-full ml-1">Supabase DB</span></h1>
         <p class="text-[10px] text-white/80">Hypefast Ecosystem — Attendance & Approval Engine</p>
       </div>
     </div>
 
-    <!-- Switcher Peran Prototype -->
-    <div class="flex items-center gap-2 bg-slate-950/40 p-1.5 rounded-xl border border-white/15 text-xs">
-      <span class="text-[10px] text-white/70 px-2 font-semibold">Simulasi Peran:</span>
-      <button onclick="switchRole('USR-001')" id="btn-role-001" class="px-3 py-1 rounded-lg font-bold transition">Indah (Staff)</button>
-      <button onclick="switchRole('USR-002')" id="btn-role-002" class="px-3 py-1 rounded-lg font-bold transition">Pak Budi (Head)</button>
-      <button onclick="switchRole('USR-003')" id="btn-role-003" class="px-3 py-1 rounded-lg font-bold transition">Siti (HRGA)</button>
+    <div class="flex items-center gap-3">
+      <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-semibold bg-white/15 text-white border border-white/20 backdrop-blur-sm">
+        <span class="w-1.5 h-1.5 rounded-full bg-emerald-300 animate-pulse"></span> Connected
+      </span>
+      <button onclick="handleLogout()" class="bg-red-500/20 hover:bg-red-500/40 text-red-100 px-3 py-1.5 rounded-lg text-xs font-semibold transition border border-red-400/30 flex items-center gap-1.5 backdrop-blur-sm">
+        <i data-lucide="log-out" class="w-3.5 h-3.5"></i> Logout
+      </button>
     </div>
   </header>
 
-  <!-- ==================== MAIN CONTENT AREA ==================== -->
+
+  <!-- ==================== 3. MAIN DASHBOARD CONTENT ==================== -->
   <main class="flex-1 p-6 space-y-6 max-w-[1600px] w-full mx-auto">
 
     <!-- Profile Banner -->
@@ -245,34 +316,47 @@
     </div>
   </div>
 
-  <!-- JAVASCRIPT & SUPABASE INTEGRATION -->
+
+  <!-- ==================== JAVASCRIPT & SUPABASE LOGIC ==================== -->
   <script>
-    // --- 1. INISIALISASI SUPABASE CLIENT (DENGAN CREDENTIAL KAMU) ---
+    // --- 1. INISIALISASI SUPABASE CLIENT DENGAN CREDENTIAL KAMU ---
     const SUPABASE_URL = 'https://fjffclkikyanizsxtjnp.supabase.co';
     const SUPABASE_KEY = 'sb_publishable_d0DBJe_9-4jbIEZ1OwjgPQ_FX6ARCRT';
     const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-    let currentUserId = 'USR-001';
+    let currentUserId = null;
     let currentUserProfile = null;
 
-    // --- 2. GANTI PROFILE SIMULASI ---
-    async function switchRole(userId) {
+    // --- 2. AUTH & LOGIN DEMO HANDLERS ---
+    function quickLoginDemo(userId) {
       currentUserId = userId;
-      
-      ['001', '002', '003'].forEach(id => {
-        const btn = document.getElementById(`btn-role-${id}`);
-        if (`USR-${id}` === userId) {
-          btn.className = "px-3 py-1 rounded-lg font-bold transition bg-emerald-400 text-slate-950 shadow-md";
-        } else {
-          btn.className = "px-3 py-1 rounded-lg font-bold transition bg-slate-800 text-white/70 hover:bg-slate-700";
-        }
-      });
-
-      await loadDashboardData();
+      document.getElementById('login-modal').classList.add('hidden');
+      loadDashboardData();
     }
 
-    // --- 3. FETCH DATA DARI SUPABASE ---
+    function handleManualLogin(e) {
+      e.preventDefault();
+      const username = document.getElementById('login-username').value.toLowerCase();
+      
+      if (username.includes('budi') || username.includes('head')) {
+        quickLoginDemo('USR-002');
+      } else if (username.includes('siti') || username.includes('hrga')) {
+        quickLoginDemo('USR-003');
+      } else {
+        quickLoginDemo('USR-001');
+      }
+    }
+
+    function handleLogout() {
+      currentUserId = null;
+      currentUserProfile = null;
+      document.getElementById('login-modal').classList.remove('hidden');
+    }
+
+    // --- 3. FETCH DATA DASHBOARD UTAMA ---
     async function loadDashboardData() {
+      if (!currentUserId) return;
+
       const { data: profile } = await _supabase
         .from('profiles')
         .select('*')
@@ -312,7 +396,7 @@
       lucide.createIcons();
     }
 
-    // --- 4. LOAD ATTENDANCE ---
+    // --- 4. LOAD DATA PRESENSI ---
     async function loadAttendance() {
       const { data: list } = await _supabase
         .from('attendance')
@@ -367,7 +451,7 @@
       `).join('');
     }
 
-    // --- 5. LOAD REIMBURSEMENTS ---
+    // --- 5. LOAD DATA REIMBURSEMENT ---
     async function loadReimbursements() {
       let query = _supabase.from('reimbursements').select('*').order('created_at', { ascending: false });
 
@@ -456,7 +540,7 @@
       }).join('');
     }
 
-    // --- 6. APPROVAL ACTIONS ---
+    // --- 6. APPROVAL ACTIONS DENGAN SUPABASE UPDATE ---
     async function approveByHead(id) {
       await _supabase.from('reimbursements').update({ current_step: 2, status: 'Pending_HRGA', head_note: 'Approved by Head of Directorate' }).eq('id', id);
       await loadDashboardData();
@@ -477,7 +561,7 @@
       await loadDashboardData();
     }
 
-    // --- 7. SUBMIT REIMBURSEMENT ---
+    // --- 7. SUBMIT FORM REIMBURSEMENT ---
     async function handleSubmitReimbursement(e) {
       e.preventDefault();
       const title = document.getElementById('reimburse-title').value;
@@ -522,7 +606,7 @@
     }
 
     window.addEventListener('DOMContentLoaded', () => {
-      switchRole('USR-001');
+      lucide.createIcons();
     });
   </script>
 </body>
