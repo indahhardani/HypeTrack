@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HypeTrack — HR Intelligence Platform</title>
+  <title>YourLog — HR Intelligence Platform</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@0.460.0"></script>
@@ -36,7 +36,7 @@
 
       <div class="text-center space-y-2">
         <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-teal-400 to-emerald-300 flex items-center justify-center font-black text-slate-900 text-2xl tracking-wider mx-auto shadow-md">HT</div>
-        <h2 class="text-2xl font-extrabold text-slate-900 tracking-tight">HypeTrack</h2>
+        <h2 class="text-2xl font-extrabold text-slate-900 tracking-tight">YourLog</h2>
       </div>
 
       <form onsubmit="handleManualLogin(event)" class="space-y-4 text-xs font-medium">
@@ -89,7 +89,7 @@
     <div class="flex items-center gap-3">
       <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-teal-400 to-emerald-300 flex items-center justify-center font-black text-slate-900 shadow-md text-sm tracking-wider">HT</div>
       <div>
-        <h1 class="text-sm font-bold text-white tracking-wide">HypeTrack <span class="text-[10px] bg-emerald-400/20 text-emerald-200 border border-emerald-300/30 px-2 py-0.5 rounded-full ml-1">Supabase DB</span></h1>
+        <h1 class="text-sm font-bold text-white tracking-wide">YourLog <span class="text-[10px] bg-emerald-400/20 text-emerald-200 border border-emerald-300/30 px-2 py-0.5 rounded-full ml-1">Supabase DB</span></h1>
         <p class="text-[10px] text-white/80">Hypefast Ecosystem — Attendance & Approval Engine</p>
       </div>
     </div>
@@ -405,7 +405,7 @@
     function startRealtime() {
       if (realtimeChannel) return;
       realtimeChannel = _supabase
-        .channel('hypetrack-changes')
+        .channel('YourLog-changes')
         .on('postgres_changes', { event: '*', schema: 'public', table: 'reimbursements' }, scheduleRefresh)
         .on('postgres_changes', { event: '*', schema: 'public', table: 'attendance' }, scheduleRefresh)
         .subscribe((status) => {
