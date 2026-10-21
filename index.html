@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HypeTrack — HR Intelligence Platform</title>
+  <title>HypeTrack — HR Intelligence & Approval Platform</title>
   
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -17,9 +17,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
   <style>
-    body {
-      font-family: 'Sora', sans-serif;
-    }
+    body { font-family: 'Sora', sans-serif; }
     .custom-scrollbar::-webkit-scrollbar { width: 6px; }
     .custom-scrollbar::-webkit-scrollbar-track { background: rgba(15, 23, 42, 0.2); }
     .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.3); border-radius: 4px; }
@@ -27,16 +25,59 @@
 </head>
 <body class="bg-gradient-to-r from-[#0060e6] via-[#1f93cb] via-[#3fa9b8] via-[#51c0ad] to-[#6be0b2] text-slate-100 min-h-screen flex flex-col antialiased selection:bg-teal-700 selection:text-white">
 
-  <!-- Header / Navigation -->
+  <!-- ==================== 1. MODAL / SCREEN LOGIN ==================== -->
+  <div id="login-modal" class="fixed inset-0 z-50 bg-slate-950/90 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="bg-slate-900 border border-teal-500/30 w-full max-w-md rounded-2xl p-6 shadow-2xl space-y-6">
+      <div class="text-center space-y-2">
+        <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-teal-400 to-emerald-300 flex items-center justify-center font-black text-slate-900 shadow-md text-lg tracking-wider mx-auto">
+          HT
+        </div>
+        <h2 class="text-xl font-bold text-white tracking-wide">Masuk ke HypeTrack</h2>
+        <p class="text-xs text-slate-400">Silakan login atau pilih akun simulasi role</p>
+      </div>
+
+      <form onsubmit="handleCustomLogin(event)" class="space-y-4 text-xs">
+        <div>
+          <label class="block font-semibold text-slate-300 mb-1">Email</label>
+          <input type="email" id="login-email" placeholder="nama@hypefast.id" required class="w-full bg-slate-950 border border-white/10 rounded-xl px-3.5 py-2.5 text-slate-100 focus:outline-none focus:border-emerald-400">
+        </div>
+        <div>
+          <label class="block font-semibold text-slate-300 mb-1">Password</label>
+          <input type="password" id="login-password" value="123456" required class="w-full bg-slate-950 border border-white/10 rounded-xl px-3.5 py-2.5 text-slate-100 focus:outline-none focus:border-emerald-400">
+        </div>
+        <button type="submit" class="w-full bg-gradient-to-r from-teal-500 to-emerald-400 hover:from-teal-400 hover:to-emerald-300 text-slate-950 py-2.5 rounded-xl font-bold transition shadow-lg shadow-teal-500/20">
+          Masuk
+        </button>
+      </form>
+
+      <!-- SIMULATION QUICK SWITCH -->
+      <div class="pt-4 border-t border-white/10 text-center space-y-2">
+        <p class="text-[11px] text-teal-300 font-semibold uppercase tracking-wider">Atau Pilih Quick Demo Role:</p>
+        <div class="grid grid-cols-3 gap-2 text-[10px]">
+          <button onclick="quickLogin('USR-001')" class="bg-slate-800 hover:bg-slate-700 text-teal-200 p-2 rounded-lg border border-teal-500/30 font-medium">
+            Indah<br><span class="text-[9px] text-slate-400">(Staff)</span>
+          </button>
+          <button onclick="quickLogin('USR-002')" class="bg-slate-800 hover:bg-slate-700 text-amber-200 p-2 rounded-lg border border-amber-500/30 font-medium">
+            Pak Budi<br><span class="text-[9px] text-slate-400">(Head)</span>
+          </button>
+          <button onclick="quickLogin('USR-003')" class="bg-slate-800 hover:bg-slate-700 text-emerald-200 p-2 rounded-lg border border-emerald-500/30 font-medium">
+            Siti<br><span class="text-[9px] text-slate-400">(HRGA)</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ==================== 2. HEADER NAVIGATION ==================== -->
   <header class="bg-slate-950/20 backdrop-blur-md border-b border-white/15 px-6 py-4 flex items-center justify-between sticky top-0 z-30">
     <div class="flex items-center gap-3">
-      <!-- Logo HT -->
       <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-teal-400 to-emerald-300 flex items-center justify-center font-black text-slate-900 shadow-md text-sm tracking-wider">
         HT
       </div>
       <div>
         <h1 class="text-sm font-bold text-white tracking-wide">HypeTrack</h1>
-        <p class="text-[10px] text-white/80">Hypefast Ecosystem — Attendance & Expense Engine</p>
+        <p class="text-[10px] text-white/80">Hypefast Ecosystem — Attendance & Approval Engine</p>
       </div>
     </div>
 
@@ -44,83 +85,88 @@
       <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-semibold bg-white/15 text-white border border-white/20 backdrop-blur-sm">
         <span class="w-1.5 h-1.5 rounded-full bg-emerald-300 animate-pulse"></span> HR System Active
       </span>
-      <a href="https://indahhardani.github.io/LandingPage/" class="bg-slate-950/30 hover:bg-slate-950/50 text-white px-3 py-1.5 rounded-lg text-xs font-semibold transition border border-white/15 flex items-center gap-2 backdrop-blur-sm">
-        <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> Portal Utama
-      </a>
+      <button onclick="handleLogout()" class="bg-red-500/20 hover:bg-red-500/40 text-red-100 px-3 py-1.5 rounded-lg text-xs font-semibold transition border border-red-400/30 flex items-center gap-1.5 backdrop-blur-sm">
+        <i data-lucide="log-out" class="w-3.5 h-3.5"></i> Logout
+      </button>
     </div>
   </header>
 
-  <!-- Main Content Area -->
+
+  <!-- ==================== 3. MAIN CONTENT AREA ==================== -->
   <main class="flex-1 p-6 space-y-6 max-w-[1600px] w-full mx-auto">
 
-    <!-- Profile & Period Info Banner -->
+    <!-- Profile & Active Role Banner -->
     <div class="bg-slate-950/20 backdrop-blur-md border border-white/15 rounded-2xl p-4 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
       <div class="flex items-center gap-4">
-        <div class="w-12 h-12 rounded-full bg-gradient-to-tr from-teal-300 to-emerald-200 flex items-center justify-center font-bold text-slate-900 text-base shadow-md">
+        <div id="user-avatar" class="w-12 h-12 rounded-full bg-gradient-to-tr from-teal-300 to-emerald-200 flex items-center justify-center font-bold text-slate-900 text-base shadow-md">
           IH
         </div>
         <div>
-          <h2 class="text-base font-bold text-white">Indah Khairunnisa Hardani</h2>
-          <p class="text-xs text-white/80">PT HYPEFAST KARYA NUSANTARA &bull; <span class="text-emerald-200 font-semibold">Periode: September 2026</span></p>
+          <div class="flex items-center gap-2">
+            <h2 id="user-name" class="text-base font-bold text-white">Indah Khairunnisa Hardani</h2>
+            <span id="user-role-badge" class="px-2 py-0.5 rounded text-[10px] font-extrabold uppercase bg-teal-400/20 text-teal-200 border border-teal-300/30">
+              Employee
+            </span>
+          </div>
+          <p class="text-xs text-white/80"><span id="user-company">PT HYPEFAST KARYA NUSANTARA</span> &bull; <span class="text-emerald-200 font-semibold">Periode: September 2026</span></p>
         </div>
       </div>
       
-      <div class="flex gap-2">
+      <div class="flex gap-2" id="action-header-buttons">
         <button onclick="openReimburseModal()" class="bg-slate-950/40 hover:bg-slate-950/60 text-white font-bold px-4 py-2 rounded-xl text-xs transition flex items-center gap-2 border border-white/20 shadow-md backdrop-blur-md">
           <i data-lucide="receipt" class="w-4 h-4 text-emerald-300"></i> Ajukan Reimbursement (AI Scan)
         </button>
       </div>
     </div>
 
-    <!-- 1. WFO Hours Progress & Top KPI Cards -->
+    <!-- WFO Hours Progress & Top KPI Cards -->
     <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
       
-      <!-- Card WFO Progress Meter -->
+      <!-- WFO Progress Meter -->
       <div class="md:col-span-2 bg-slate-950/20 backdrop-blur-md border border-white/15 rounded-2xl p-5 flex flex-col justify-between shadow-sm relative overflow-hidden">
         <div class="flex items-center justify-between">
           <div>
             <p class="text-[11px] text-white/80 font-medium uppercase tracking-wider">Durasi WFO Bulan Ini (Bersih)</p>
             <div class="flex items-baseline gap-2 mt-1">
               <h3 class="text-3xl font-extrabold text-white" id="wfo-total-hours">63.3</h3>
-              <span class="text-xs text-white/80">/ 60 Jam Minimal</span>
+              <span class="text-xs text-white/80" id="wfo-target-label">/ 60 Jam Minimal</span>
             </div>
           </div>
-          <span class="px-3 py-1 rounded-full text-xs font-bold bg-emerald-400/20 text-emerald-100 border border-emerald-300/30 flex items-center gap-1 backdrop-blur-sm">
-            <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-emerald-300"></i> Target Terpenuhi (105.5%)
+          <span id="wfo-status-badge" class="px-3 py-1 rounded-full text-xs font-bold bg-emerald-400/20 text-emerald-100 border border-emerald-300/30 flex items-center gap-1 backdrop-blur-sm">
+            <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-emerald-300"></i> Target Terpenuhi
           </span>
         </div>
 
-        <!-- Progress Bar -->
         <div class="mt-4 space-y-1.5">
           <div class="w-full bg-slate-950/30 h-3 rounded-full overflow-hidden p-0.5 border border-white/15">
-            <div class="bg-gradient-to-r from-teal-300 via-emerald-300 to-green-300 h-full rounded-full transition-all duration-1000" style="width: 100%"></div>
+            <div id="wfo-progress-bar" class="bg-gradient-to-r from-teal-300 via-emerald-300 to-green-300 h-full rounded-full transition-all duration-1000" style="width: 100%"></div>
           </div>
           <div class="flex justify-between text-[10px] text-white/80 font-medium">
             <span>0 Jam</span>
-            <span>Target: 60 Jam</span>
-            <span class="text-emerald-200 font-bold">63.3 Jam Selesai</span>
+            <span id="wfo-target-text">Target: 60 Jam</span>
+            <span id="wfo-done-text" class="text-emerald-200 font-bold">63.3 Jam Selesai</span>
           </div>
         </div>
       </div>
 
-      <!-- Card Total Hari Hadir -->
+      <!-- Total Hari Hadir -->
       <div class="bg-slate-950/20 backdrop-blur-md border border-white/15 rounded-2xl p-5 flex items-center justify-between shadow-sm">
         <div>
           <p class="text-[11px] text-white/80 font-medium">Total Hari Hadir WFO</p>
-          <h3 class="text-2xl font-bold text-white mt-1">8 Hari</h3>
-          <p class="text-[10px] text-white/70 mt-0.5">Rata-rata 7.9 Jam / Hari</p>
+          <h3 class="text-2xl font-bold text-white mt-1" id="kpi-days-count">8 Hari</h3>
+          <p class="text-[10px] text-white/70 mt-0.5" id="kpi-avg-hours">Rata-rata 7.9 Jam / Hari</p>
         </div>
         <div class="p-3 bg-white/10 text-emerald-200 border border-white/15 rounded-xl">
           <i data-lucide="calendar-check" class="w-6 h-6"></i>
         </div>
       </div>
 
-      <!-- Card Total Reimbursement Status -->
+      <!-- Total Reimbursement -->
       <div class="bg-slate-950/20 backdrop-blur-md border border-white/15 rounded-2xl p-5 flex items-center justify-between shadow-sm">
         <div>
           <p class="text-[11px] text-white/80 font-medium">Total Reimbursement</p>
-          <h3 class="text-2xl font-bold text-emerald-200 mt-1" id="kpi-reimburse-total">Rp 450.000</h3>
-          <p class="text-[10px] text-amber-200 mt-0.5">1 Pengajuan Pending Review</p>
+          <h3 class="text-2xl font-bold text-emerald-200 mt-1" id="kpi-reimburse-total">Rp 0</h3>
+          <p class="text-[10px] text-amber-200 mt-0.5" id="kpi-pending-count">0 Pengajuan Pending</p>
         </div>
         <div class="p-3 bg-white/10 text-teal-200 border border-white/15 rounded-xl">
           <i data-lucide="wallet" class="w-6 h-6"></i>
@@ -129,16 +175,16 @@
 
     </div>
 
-    <!-- 2. Main Content Tabs & Split View -->
+    <!-- Main Content Tabs & Split View -->
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
       
-      <!-- Left Column: Tabel Presensi WFO Detail (8 Cols) -->
+      <!-- Left Column: Tabel Presensi (8 Cols) -->
       <div class="lg:col-span-8 bg-slate-950/20 backdrop-blur-md border border-white/15 rounded-2xl overflow-hidden flex flex-col">
         <div class="p-4 border-b border-white/15 flex items-center justify-between">
           <h3 class="text-xs font-bold text-white flex items-center gap-2">
-            <i data-lucide="clock" class="w-4 h-4 text-emerald-300"></i> Rincian Presensi WFO September 2026 (Potong Istirahat 1 Jam)
+            <i data-lucide="clock" class="w-4 h-4 text-emerald-300"></i> Rincian Presensi WFO September 2026
           </h3>
-          <span class="text-[10px] text-white/80 bg-slate-950/30 border border-white/15 px-2.5 py-1 rounded-lg">8 Sesi Tercatat</span>
+          <span class="text-[10px] text-white/80 bg-slate-950/30 border border-white/15 px-2.5 py-1 rounded-lg" id="attendance-count-badge">0 Sesi Tercatat</span>
         </div>
 
         <div class="overflow-x-auto">
@@ -147,10 +193,10 @@
               <tr class="bg-slate-950/30 border-b border-white/15 text-white/80 font-semibold">
                 <th class="p-3">Tanggal</th>
                 <th class="p-3">Shift</th>
-                <th class="p-3">Jadwal Masuk/Keluar</th>
+                <th class="p-3">Jadwal</th>
                 <th class="p-3">Clock In</th>
                 <th class="p-3">Clock Out</th>
-                <th class="p-3 text-right">Durasi Kerja</th>
+                <th class="p-3 text-right">Durasi</th>
                 <th class="p-3 text-center">Status</th>
               </tr>
             </thead>
@@ -161,39 +207,27 @@
         </div>
       </div>
 
-      <!-- Right Column: Panel Reimbursement History (4 Cols) -->
+      <!-- Right Column: Panel Reimbursement & Approval Queue (4 Cols) -->
       <div class="lg:col-span-4 bg-slate-950/20 backdrop-blur-md border border-white/15 rounded-2xl p-5 flex flex-col space-y-4">
         <div class="flex items-center justify-between border-b border-white/15 pb-3">
-          <h3 class="text-xs font-bold text-white flex items-center gap-2">
+          <h3 class="text-xs font-bold text-white flex items-center gap-2" id="reimburse-panel-title">
             <i data-lucide="file-text" class="w-4 h-4 text-emerald-300"></i> Riwayat Reimbursement
           </h3>
-          <button onclick="openReimburseModal()" class="text-[10px] text-emerald-200 font-semibold hover:underline">+ Tambah</button>
+          <button id="btn-add-reimburse-small" onclick="openReimburseModal()" class="text-[10px] text-emerald-200 font-semibold hover:underline">+ Tambah</button>
         </div>
 
         <!-- List Reimbursement items -->
-        <div class="flex-1 space-y-3 overflow-y-auto custom-scrollbar pr-1 max-h-[400px]" id="reimburse-list">
-          <div class="bg-slate-950/30 border border-white/15 p-3.5 rounded-xl space-y-2">
-            <div class="flex justify-between items-start">
-              <div>
-                <p class="font-bold text-white text-xs">GrabCar (Visit BPOM)</p>
-                <p class="text-[10px] text-white/70">18 Sep 2026 &bull; Transportasi</p>
-              </div>
-              <span class="px-2 py-0.5 rounded text-[9px] font-bold bg-amber-400/20 text-amber-200 border border-amber-300/30">Pending</span>
-            </div>
-            <div class="flex justify-between items-center pt-2 border-t border-white/10 text-xs">
-              <span class="text-white/70 text-[10px]">Total Klaim:</span>
-              <span class="font-bold text-emerald-200">Rp 450.000</span>
-            </div>
-          </div>
+        <div class="flex-1 space-y-3 overflow-y-auto custom-scrollbar pr-1 max-h-[420px]" id="reimburse-list">
+          <!-- Rendered via JS -->
         </div>
-
       </div>
 
     </div>
 
   </main>
 
-  <!-- MODAL: AUTO SCAN REIMBURSEMENT FORM -->
+
+  <!-- ==================== 4. MODAL: FORM REIMBURSEMENT ==================== -->
   <div id="reimburse-modal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
     <div class="bg-slate-900 border border-emerald-500/30 w-full max-w-lg rounded-2xl flex flex-col shadow-2xl overflow-hidden">
       
@@ -208,7 +242,6 @@
 
       <form onsubmit="handleSubmitReimbursement(event)" class="p-6 space-y-4 text-xs">
         
-        <!-- File Upload Area -->
         <div class="border-2 border-dashed border-emerald-500/30 hover:border-emerald-400 rounded-xl p-5 text-center cursor-pointer transition bg-slate-950/50" onclick="document.getElementById('receipt-file').click()">
           <i data-lucide="upload-cloud" class="w-8 h-8 text-emerald-400 mx-auto mb-2"></i>
           <p class="font-semibold text-slate-200">Unggah Bukti Struk / Kuitansi</p>
@@ -220,7 +253,6 @@
           <i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> AI Sedang Membaca Struk...
         </div>
 
-        <!-- Form Auto Filled by AI -->
         <div class="space-y-3 pt-2">
           <div>
             <label class="block font-semibold text-slate-300 mb-1">Merchant / Judul Pengeluaran</label>
@@ -253,7 +285,7 @@
         <div class="pt-3 border-t border-white/10 flex justify-end gap-2">
           <button type="button" onclick="closeReimburseModal()" class="bg-slate-800 text-slate-300 px-4 py-2 rounded-xl font-bold hover:bg-slate-700 transition">Batal</button>
           <button type="submit" id="btn-submit-reimburse" class="bg-gradient-to-r from-teal-500 to-emerald-400 hover:from-teal-400 hover:to-emerald-300 text-slate-950 px-5 py-2 rounded-xl font-bold transition shadow-lg shadow-teal-500/20">
-            Kirim Pengajuan Reimbursement
+            Kirim ke Head of Directorate
           </button>
         </div>
 
@@ -261,32 +293,226 @@
     </div>
   </div>
 
-  <script>
-    lucide.createIcons();
 
-    const excelAttendanceData = [
-      { date: 'Wed, 2 Sep 2026', shift: 'N', schedule: '09:30 - 18:30', cin: '08:13', cout: '18:30', duration: '9 Jam 17 Mnt', status: 'Hadir (H)' },
-      { date: 'Fri, 4 Sep 2026', shift: 'N', schedule: '09:30 - 18:30', cin: '08:20', cout: '15:45', duration: '6 Jam 25 Mnt', status: 'Hadir (H)' },
-      { date: 'Wed, 9 Sep 2026', shift: 'N', schedule: '09:30 - 18:30', cin: '08:38', cout: '17:12', duration: '7 Jam 34 Mnt', status: 'Hadir (H)' },
-      { date: 'Thu, 10 Sep 2026', shift: 'N', schedule: '09:30 - 18:30', cin: '08:35', cout: '17:15', duration: '7 Jam 40 Mnt', status: 'Hadir (H)' },
-      { date: 'Wed, 16 Sep 2026', shift: 'N', schedule: '09:30 - 18:30', cin: '08:29', cout: '16:59', duration: '7 Jam 30 Mnt', status: 'Hadir (H)' },
-      { date: 'Thu, 17 Sep 2026', shift: 'N', schedule: '09:30 - 18:30', cin: '08:25', cout: '19:13', duration: '9 Jam 48 Mnt', status: 'Hadir (H)' },
-      { date: 'Mon, 21 Sep 2026', shift: 'N', schedule: '09:30 - 18:30', cin: '08:45', cout: '17:24', duration: '7 Jam 39 Mnt', status: 'Hadir (H)' },
-      { date: 'Thu, 24 Sep 2026', shift: 'N', schedule: '09:30 - 18:30', cin: '08:22', cout: '16:45', duration: '7 Jam 23 Mnt', status: 'Hadir (H)' },
+  <!-- ==================== 5. JAVASCRIPT LOGIC & DUMMY DATABASE ==================== -->
+  <script>
+    // --- A. DATA DUMMY USERS ---
+    const usersDatabase = [
+      {
+        id: 'USR-001',
+        email: 'indah@hypefast.id',
+        password: '123',
+        fullName: 'Indah Khairunnisa Hardani',
+        initials: 'IH',
+        company: 'PT HYPEFAST KARYA NUSANTARA',
+        role: 'Employee',
+        roleLabel: 'Employee / Staff',
+        targetWfoHours: 60,
+        approverId: 'USR-002'
+      },
+      {
+        id: 'USR-002',
+        email: 'budi@hypefast.id',
+        password: '123',
+        fullName: 'Budi Pratama',
+        initials: 'BP',
+        company: 'PT HYPEFAST KARYA NUSANTARA',
+        role: 'Head_of_Directorate',
+        roleLabel: 'Head of Directorate',
+        targetWfoHours: 60,
+        approverId: null
+      },
+      {
+        id: 'USR-003',
+        email: 'hrga@hypefast.id',
+        password: '123',
+        fullName: 'Siti Rahmawati',
+        initials: 'SR',
+        company: 'PT HYPEFAST KARYA NUSANTARA',
+        role: 'HRGA_Admin',
+        roleLabel: 'HRGA Final Approver',
+        targetWfoHours: 60,
+        approverId: null
+      }
     ];
 
-    function renderAttendanceTable() {
-      const tbody = document.getElementById('attendance-table-body');
-      if (!tbody) return;
+    // --- B. DATA DUMMY PRESENSI ---
+    const attendanceDatabase = {
+      'USR-001': [
+        { date: 'Wed, 2 Sep 2026', shift: 'N', schedule: '09:30 - 18:30', cin: '08:13', cout: '18:30', durationHours: 9.28, durationText: '9 Jam 17 Mnt', status: 'Hadir (H)' },
+        { date: 'Fri, 4 Sep 2026', shift: 'N', schedule: '09:30 - 18:30', cin: '08:20', cout: '15:45', durationHours: 6.41, durationText: '6 Jam 25 Mnt', status: 'Hadir (H)' },
+        { date: 'Wed, 9 Sep 2026', shift: 'N', schedule: '09:30 - 18:30', cin: '08:38', cout: '17:12', durationHours: 7.56, durationText: '7 Jam 34 Mnt', status: 'Hadir (H)' },
+        { date: 'Thu, 10 Sep 2026', shift: 'N', schedule: '09:30 - 18:30', cin: '08:35', cout: '17:15', durationHours: 7.66, durationText: '7 Jam 40 Mnt', status: 'Hadir (H)' },
+        { date: 'Wed, 16 Sep 2026', shift: 'N', schedule: '09:30 - 18:30', cin: '08:29', cout: '16:59', durationHours: 7.5, durationText: '7 Jam 30 Mnt', status: 'Hadir (H)' },
+        { date: 'Thu, 17 Sep 2026', shift: 'N', schedule: '09:30 - 18:30', cin: '08:25', cout: '19:13', durationHours: 9.8, durationText: '9 Jam 48 Mnt', status: 'Hadir (H)' },
+        { date: 'Mon, 21 Sep 2026', shift: 'N', schedule: '09:30 - 18:30', cin: '08:45', cout: '17:24', durationHours: 7.65, durationText: '7 Jam 39 Mnt', status: 'Hadir (H)' },
+        { date: 'Thu, 24 Sep 2026', shift: 'N', schedule: '09:30 - 18:30', cin: '08:22', cout: '16:45', durationHours: 7.38, durationText: '7 Jam 23 Mnt', status: 'Hadir (H)' }
+      ],
+      'USR-002': [
+        { date: 'Tue, 1 Sep 2026', shift: 'N', schedule: '09:00 - 18:00', cin: '08:50', cout: '18:15', durationHours: 8.4, durationText: '8 Jam 25 Mnt', status: 'Hadir (H)' },
+        { date: 'Thu, 3 Sep 2026', shift: 'N', schedule: '09:00 - 18:00', cin: '08:55', cout: '18:30', durationHours: 8.5, durationText: '8 Jam 30 Mnt', status: 'Hadir (H)' },
+        { date: 'Mon, 7 Sep 2026', shift: 'N', schedule: '09:00 - 18:00', cin: '08:40', cout: '19:00', durationHours: 9.3, durationText: '9 Jam 20 Mnt', status: 'Hadir (H)' }
+      ],
+      'USR-003': [
+        { date: 'Tue, 1 Sep 2026', shift: 'N', schedule: '08:30 - 17:30', cin: '08:25', cout: '17:35', durationHours: 8.1, durationText: '8 Jam 10 Mnt', status: 'Hadir (H)' },
+        { date: 'Wed, 2 Sep 2026', shift: 'N', schedule: '08:30 - 17:30', cin: '08:20', cout: '17:40', durationHours: 8.3, durationText: '8 Jam 20 Mnt', status: 'Hadir (H)' }
+      ]
+    };
 
-      tbody.innerHTML = excelAttendanceData.map(item => `
+    // --- C. DATA DUMMY REIMBURSEMENT (STATE CORE) ---
+    let reimbursementsDatabase = [
+      {
+        id: 'REIMB-001',
+        userId: 'USR-001',
+        userName: 'Indah Khairunnisa Hardani',
+        title: 'GrabCar (Visit BPOM)',
+        category: 'Transportasi',
+        amount: 450000,
+        date: '2026-09-18',
+        currentStep: 1, // 1: Pending Head, 2: Pending HRGA, 3: Approved/Paid
+        status: 'Pending_Head',
+        headNote: '',
+        hrgaNote: ''
+      },
+      {
+        id: 'REIMB-002',
+        userId: 'USR-001',
+        userName: 'Indah Khairunnisa Hardani',
+        title: 'Makan Malam Tim Client',
+        category: 'Makan Klien',
+        amount: 320000,
+        date: '2026-09-10',
+        currentStep: 2,
+        status: 'Pending_HRGA',
+        headNote: 'Approved by Budi (Head)',
+        hrgaNote: ''
+      }
+    ];
+
+    // --- ACTIVE STATE ---
+    let currentUser = null;
+
+    // --- STATE INITIALIZATION ---
+    function initApp() {
+      lucide.createIcons();
+      // Buka Login Modal secara default
+      document.getElementById('login-modal').classList.remove('hidden');
+    }
+
+    // --- AUTH FUNCTIONS ---
+    function quickLogin(userId) {
+      currentUser = usersDatabase.find(u => u.id === userId);
+      document.getElementById('login-modal').classList.add('hidden');
+      renderDashboard();
+    }
+
+    function handleCustomLogin(e) {
+      e.preventDefault();
+      const email = document.getElementById('login-email').value;
+      const found = usersDatabase.find(u => u.email.toLowerCase() === email.toLowerCase());
+      if (found) {
+        currentUser = found;
+        document.getElementById('login-modal').classList.add('hidden');
+        renderDashboard();
+      } else {
+        alert("Email tidak ditemukan! Silakan gunakan quick demo button di bawah.");
+      }
+    }
+
+    function handleLogout() {
+      currentUser = null;
+      document.getElementById('login-modal').classList.remove('hidden');
+    }
+
+    // --- RENDER DASHBOARD CORE ---
+    function renderDashboard() {
+      if (!currentUser) return;
+
+      // 1. Render Header Profile
+      document.getElementById('user-avatar').innerText = currentUser.initials;
+      document.getElementById('user-name').innerText = currentUser.fullName;
+      document.getElementById('user-company').innerText = currentUser.company;
+      document.getElementById('user-role-badge').innerText = currentUser.roleLabel;
+
+      // 2. Adjust Action Button according to Role
+      const actionHeader = document.getElementById('action-header-buttons');
+      const reimbursePanelTitle = document.getElementById('reimburse-panel-title');
+      const btnAddSmall = document.getElementById('btn-add-reimburse-small');
+
+      if (currentUser.role === 'Employee') {
+        actionHeader.innerHTML = `
+          <button onclick="openReimburseModal()" class="bg-slate-950/40 hover:bg-slate-950/60 text-white font-bold px-4 py-2 rounded-xl text-xs transition flex items-center gap-2 border border-white/20 shadow-md backdrop-blur-md">
+            <i data-lucide="receipt" class="w-4 h-4 text-emerald-300"></i> Ajukan Reimbursement (AI Scan)
+          </button>
+        `;
+        reimbursePanelTitle.innerHTML = `<i data-lucide="file-text" class="w-4 h-4 text-emerald-300"></i> Riwayat Reimbursement Saya`;
+        btnAddSmall.classList.remove('hidden');
+      } else if (currentUser.role === 'Head_of_Directorate') {
+        actionHeader.innerHTML = `<span class="text-xs bg-amber-500/20 text-amber-200 px-3 py-1.5 rounded-xl border border-amber-400/30 font-semibold">Mode Persetujuan Directorate Head</span>`;
+        reimbursePanelTitle.innerHTML = `<i data-lucide="check-square" class="w-4 h-4 text-amber-300"></i> Antrean Approval (Level 1 - Head)`;
+        btnAddSmall.classList.add('hidden');
+      } else if (currentUser.role === 'HRGA_Admin') {
+        actionHeader.innerHTML = `<span class="text-xs bg-emerald-500/20 text-emerald-200 px-3 py-1.5 rounded-xl border border-emerald-400/30 font-semibold">Mode Final Approval HRGA</span>`;
+        reimbursePanelTitle.innerHTML = `<i data-lucide="shield-check" class="w-4 h-4 text-emerald-300"></i> Antrean Final Approval (Level 2 - HRGA)`;
+        btnAddSmall.classList.add('hidden');
+      }
+
+      // 3. Render Attendance Table & Calculate WFO
+      renderAttendanceSection();
+
+      // 4. Render Reimbursement Panel & Approval Queue
+      renderReimbursementSection();
+
+      lucide.createIcons();
+    }
+
+    // --- RENDER ATTENDANCE ---
+    function renderAttendanceSection() {
+      const list = attendanceDatabase[currentUser.id] || [];
+      const tbody = document.getElementById('attendance-table-body');
+      
+      let totalHours = 0;
+      list.forEach(item => {
+        totalHours += item.durationHours;
+      });
+
+      // Update KPI Cards
+      document.getElementById('wfo-total-hours').innerText = totalHours.toFixed(1);
+      document.getElementById('kpi-days-count').innerText = `${list.length} Hari`;
+      
+      const avg = list.length > 0 ? (totalHours / list.length).toFixed(1) : 0;
+      document.getElementById('kpi-avg-hours').innerText = `Rata-rata ${avg} Jam / Hari`;
+      document.getElementById('attendance-count-badge').innerText = `${list.length} Sesi Tercatat`;
+
+      // Progress Bar Calculation
+      const target = currentUser.targetWfoHours;
+      const percentage = Math.min(Math.round((totalHours / target) * 100), 100);
+      
+      document.getElementById('wfo-progress-bar').style.width = `${percentage}%`;
+      document.getElementById('wfo-done-text').innerText = `${totalHours.toFixed(1)} Jam Selesai`;
+
+      if (totalHours >= target) {
+        document.getElementById('wfo-status-badge').className = "px-3 py-1 rounded-full text-xs font-bold bg-emerald-400/20 text-emerald-100 border border-emerald-300/30 flex items-center gap-1 backdrop-blur-sm";
+        document.getElementById('wfo-status-badge').innerHTML = `<i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-emerald-300"></i> Target Terpenuhi (${percentage}%)`;
+      } else {
+        document.getElementById('wfo-status-badge').className = "px-3 py-1 rounded-full text-xs font-bold bg-amber-400/20 text-amber-100 border border-amber-300/30 flex items-center gap-1 backdrop-blur-sm";
+        document.getElementById('wfo-status-badge').innerHTML = `<i data-lucide="clock" class="w-3.5 h-3.5 text-amber-300"></i> Belum Terpenuhi (${percentage}%)`;
+      }
+
+      // Render Rows
+      if (list.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="7" class="p-4 text-center text-white/50">Belum ada riwayat presensi bulan ini.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = list.map(item => `
         <tr class="hover:bg-white/10 transition">
           <td class="p-3 font-semibold text-white">${item.date}</td>
           <td class="p-3 text-white/70">${item.shift}</td>
           <td class="p-3 text-white/70">${item.schedule}</td>
           <td class="p-3 font-semibold text-emerald-300">${item.cin}</td>
           <td class="p-3 font-semibold text-teal-200">${item.cout}</td>
-          <td class="p-3 text-right font-bold text-emerald-200">${item.duration}</td>
+          <td class="p-3 text-right font-bold text-emerald-200">${item.durationText}</td>
           <td class="p-3 text-center">
             <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-400/20 text-emerald-200 border border-emerald-300/30">
               ${item.status}
@@ -296,6 +522,140 @@
       `).join('');
     }
 
+    // --- RENDER REIMBURSEMENT & APPROVAL QUEUE ---
+    function renderReimbursementSection() {
+      const container = document.getElementById('reimburse-list');
+      let displayItems = [];
+
+      if (currentUser.role === 'Employee') {
+        // Tampilkan reimbursement milik sendiri
+        displayItems = reimbursementsDatabase.filter(r => r.userId === currentUser.id);
+      } else if (currentUser.role === 'Head_of_Directorate') {
+        // Head melihat klaim dari bawahan yang berada pada Step 1 (Pending Head)
+        displayItems = reimbursementsDatabase.filter(r => r.currentStep === 1 || r.status.includes('Head'));
+      } else if (currentUser.role === 'HRGA_Admin') {
+        // HRGA melihat klaim yang sudah di-approve Head (Step 2/3)
+        displayItems = reimbursementsDatabase.filter(r => r.currentStep >= 2);
+      }
+
+      // Update Top KPI Total
+      const myApprovedTotal = reimbursementsDatabase
+        .filter(r => r.userId === (currentUser.role === 'Employee' ? currentUser.id : 'USR-001') && (r.status === 'Approved' || r.status === 'Paid'))
+        .reduce((sum, item) => sum + item.amount, 0);
+      
+      const pendingCount = displayItems.filter(r => r.status.startsWith('Pending')).length;
+
+      document.getElementById('kpi-reimburse-total').innerText = `Rp ${myApprovedTotal.toLocaleString('id-ID')}`;
+      document.getElementById('kpi-pending-count').innerText = `${pendingCount} Pengajuan Pending`;
+
+      if (displayItems.length === 0) {
+        container.innerHTML = `<div class="p-4 text-center text-xs text-white/50 bg-slate-950/20 rounded-xl">Tidak ada data reimbursement.</div>`;
+        return;
+      }
+
+      container.innerHTML = displayItems.map(item => {
+        // Status Badge Styling
+        let statusBadge = '';
+        if (item.status === 'Pending_Head') {
+          statusBadge = `<span class="px-2 py-0.5 rounded text-[9px] font-bold bg-amber-400/20 text-amber-200 border border-amber-300/30">Pending: Head Approval</span>`;
+        } else if (item.status === 'Pending_HRGA') {
+          statusBadge = `<span class="px-2 py-0.5 rounded text-[9px] font-bold bg-blue-400/20 text-blue-200 border border-blue-300/30">Pending: HRGA Final</span>`;
+        } else if (item.status === 'Approved' || item.status === 'Paid') {
+          statusBadge = `<span class="px-2 py-0.5 rounded text-[9px] font-bold bg-emerald-400/20 text-emerald-200 border border-emerald-300/30">Approved / Paid</span>`;
+        } else if (item.status.startsWith('Rejected')) {
+          statusBadge = `<span class="px-2 py-0.5 rounded text-[9px] font-bold bg-red-400/20 text-red-200 border border-red-300/30">Rejected</span>`;
+        }
+
+        // Action buttons based on Role
+        let actionButtonsHtml = '';
+        if (currentUser.role === 'Head_of_Directorate' && item.currentStep === 1) {
+          actionButtonsHtml = `
+            <div class="flex gap-2 pt-2 border-t border-white/10">
+              <button onclick="approveByHead('${item.id}')" class="flex-1 bg-emerald-500/20 hover:bg-emerald-500/40 text-emerald-200 py-1 rounded text-[10px] font-bold border border-emerald-400/30">
+                ✓ Approve (Kirim HRGA)
+              </button>
+              <button onclick="rejectByHead('${item.id}')" class="flex-1 bg-red-500/20 hover:bg-red-500/40 text-red-200 py-1 rounded text-[10px] font-bold border border-red-400/30">
+                ✕ Reject
+              </button>
+            </div>
+          `;
+        } else if (currentUser.role === 'HRGA_Admin' && item.currentStep === 2) {
+          actionButtonsHtml = `
+            <div class="flex gap-2 pt-2 border-t border-white/10">
+              <button onclick="approveByHRGA('${item.id}')" class="flex-1 bg-emerald-500/20 hover:bg-emerald-500/40 text-emerald-200 py-1 rounded text-[10px] font-bold border border-emerald-400/30">
+                ✓ Final Approve & Pay
+              </button>
+              <button onclick="rejectByHRGA('${item.id}')" class="flex-1 bg-red-500/20 hover:bg-red-500/40 text-red-200 py-1 rounded text-[10px] font-bold border border-red-400/30">
+                ✕ Reject
+              </button>
+            </div>
+          `;
+        }
+
+        return `
+          <div class="bg-slate-950/30 border border-white/15 p-3.5 rounded-xl space-y-2">
+            <div class="flex justify-between items-start">
+              <div>
+                <p class="font-bold text-white text-xs">${item.title}</p>
+                <p class="text-[10px] text-white/70">${item.userName} &bull; ${item.date} &bull; ${item.category}</p>
+              </div>
+              ${statusBadge}
+            </div>
+            <div class="flex justify-between items-center text-xs">
+              <span class="text-white/70 text-[10px]">Total Klaim:</span>
+              <span class="font-bold text-emerald-200">Rp ${item.amount.toLocaleString('id-ID')}</span>
+            </div>
+            ${item.headNote ? `<p class="text-[9px] text-emerald-300 italic">Head Note: \${item.headNote}</p>` : ''}
+            ${actionButtonsHtml}
+          </div>
+        `;
+      }).join('');
+    }
+
+    // --- APPROVAL ACTION HANDLERS ---
+    function approveByHead(reimbId) {
+      const item = reimbursementsDatabase.find(r => r.id === reimbId);
+      if (item) {
+        item.currentStep = 2;
+        item.status = 'Pending_HRGA';
+        item.headNote = 'Approved by Head of Directorate';
+        renderDashboard();
+        alert(`Pengajuan ${item.title} disetujui! Diteruskan ke HRGA untuk final approval.`);
+      }
+    }
+
+    function rejectByHead(reimbId) {
+      const item = reimbursementsDatabase.find(r => r.id === reimbId);
+      if (item) {
+        item.currentStep = 0;
+        item.status = 'Rejected_by_Head';
+        item.headNote = 'Rejected by Head of Directorate';
+        renderDashboard();
+      }
+    }
+
+    function approveByHRGA(reimbId) {
+      const item = reimbursementsDatabase.find(r => r.id === reimbId);
+      if (item) {
+        item.currentStep = 3;
+        item.status = 'Approved';
+        item.hrgaNote = 'Verified & Paid by HRGA';
+        renderDashboard();
+        alert(`Final Approval Sukses! Reimbursement ${item.title} siap dicairkan.`);
+      }
+    }
+
+    function rejectByHRGA(reimbId) {
+      const item = reimbursementsDatabase.find(r => r.id === reimbId);
+      if (item) {
+        item.currentStep = 0;
+        item.status = 'Rejected_by_HRGA';
+        item.hrgaNote = 'Rejected by HRGA Admin';
+        renderDashboard();
+      }
+    }
+
+    // --- MODAL REIMBURSEMENT FORM HANDLERS ---
     function openReimburseModal() {
       document.getElementById('reimburse-modal').classList.remove('hidden');
     }
@@ -312,7 +672,7 @@
 
       setTimeout(() => {
         status.classList.add('hidden');
-        document.getElementById('reimburse-title').value = "Kuitansi Grab / Taxi Meeting";
+        document.getElementById('reimburse-title').value = "Taxi Grab Meeting BPOM";
         document.getElementById('reimburse-date').value = "2026-09-24";
         document.getElementById('reimburse-category').value = "Transportasi";
         document.getElementById('reimburse-amount').value = "175000";
@@ -326,31 +686,29 @@
       const category = document.getElementById('reimburse-category').value;
       const amount = parseInt(document.getElementById('reimburse-amount').value);
 
-      const list = document.getElementById('reimburse-list');
-      const newItem = document.createElement('div');
-      newItem.className = "bg-slate-950/30 border border-white/15 p-3.5 rounded-xl space-y-2";
-      newItem.innerHTML = `
-        <div class="flex justify-between items-start">
-          <div>
-            <p class="font-bold text-white text-xs">${title}</p>
-            <p class="text-[10px] text-white/70">${date} &bull; ${category}</p>
-          </div>
-          <span class="px-2 py-0.5 rounded text-[9px] font-bold bg-amber-400/20 text-amber-200 border border-amber-300/30">Pending</span>
-        </div>
-        <div class="flex justify-between items-center pt-2 border-t border-white/10 text-xs">
-          <span class="text-white/70 text-[10px]">Total Klaim:</span>
-          <span class="font-bold text-emerald-200">Rp ${amount.toLocaleString('id-ID')}</span>
-        </div>
-      `;
-      list.prepend(newItem);
+      const newClaim = {
+        id: `REIMB-00${reimbursementsDatabase.length + 1}`,
+        userId: currentUser.id,
+        userName: currentUser.fullName,
+        title: title,
+        category: category,
+        amount: amount,
+        date: date,
+        currentStep: 1, // Start Level 1
+        status: 'Pending_Head',
+        headNote: '',
+        hrgaNote: ''
+      };
 
+      reimbursementsDatabase.unshift(newClaim);
       e.target.reset();
       closeReimburseModal();
-      alert("Pengajuan reimbursement berhasil dikirim!");
+      renderDashboard();
+      alert("Pengajuan reimbursement berhasil dikirim! Menunggu approval dari Head of Directorate.");
     }
 
     window.addEventListener('DOMContentLoaded', () => {
-      renderAttendanceTable();
+      initApp();
     });
   </script>
 </body>
